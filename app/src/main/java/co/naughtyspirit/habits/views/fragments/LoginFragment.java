@@ -10,17 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 
-import co.naughtyspirit.habits.MainActivity;
 import co.naughtyspirit.habits.R;
 import co.naughtyspirit.habits.bus.producers.UserEventsProducer;
 import co.naughtyspirit.habits.net.models.User;
-import co.naughtyspirit.habits.utils.Constants;
 import co.naughtyspirit.habits.utils.FontsLoaderUtil;
+import co.naughtyspirit.habits.views.interfaces.OnViewPagerFragmentChange;
 
 /**
  * * Created by Seishin <atanas@naughtyspirit.co>
@@ -28,7 +25,7 @@ import co.naughtyspirit.habits.utils.FontsLoaderUtil;
  * *
  * * NaughtySpirit 2015
  */
-public class LoginFragment extends Fragment implements OnClickListener{
+public class LoginFragment extends Fragment implements OnClickListener {
 
     private static final String TAG = LoginFragment.class.getName();
     private View view;
@@ -38,6 +35,7 @@ public class LoginFragment extends Fragment implements OnClickListener{
     private Button register;
     
     private Activity activity;
+    private OnViewPagerFragmentChange callback;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,33 +69,19 @@ public class LoginFragment extends Fragment implements OnClickListener{
     }
 
     @Override
-    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
-        if (!enter) {
-            return AnimationUtils.loadAnimation(activity, R.anim.slide_out_left);
-        }
-
-        return super.onCreateAnimation(transit, enter, nextAnim);
-    }
-
-    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.submit:
-                Log.i(TAG, "Clicked");
-                
                 User user = new User();
                 user.setEmail(email.getText().toString());
                 user.setPassword(password.getText().toString());
 
-                UserEventsProducer.produceUserCreatedEvent(user);
+                UserEventsProducer.produceUserLoginEvent(user);
 
                 break;
             
             case R.id.register:
-                ((MainActivity) activity).getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, new RegisterFragment(), Constants.TAG_FRAGMENT_REGISTER)
-                        .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_right)
-                        .commit();
+                callback.setFragmentAt(1);
                 break;
         }
     }
@@ -107,5 +91,11 @@ public class LoginFragment extends Fragment implements OnClickListener{
         super.onAttach(activity);
         
         this.activity = activity;
+        
+        try {
+            this.callback = (OnViewPagerFragmentChange) activity;
+        } catch (ClassCastException e) {
+            Log.e(TAG, e.getMessage());
+        }
     }
 }

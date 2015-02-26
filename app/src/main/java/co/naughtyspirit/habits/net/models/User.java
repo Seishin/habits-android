@@ -1,7 +1,5 @@
 package co.naughtyspirit.habits.net.models;
 
-import com.google.gson.annotations.SerializedName;
-
 /**
  * * Created by Seishin <atanas@naughtyspirit.co>
  * * on 2/22/15.
@@ -10,12 +8,12 @@ import com.google.gson.annotations.SerializedName;
  */
 public class User {
     
-    @SerializedName("_id")
     private String id;
     private String email;
     private String password;
     private String profileAvatar;
     private String name;
+    private String token;
 
     public String getId() {
         return id;
@@ -57,6 +55,14 @@ public class User {
         this.name = name;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -65,6 +71,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", profileAvatar='" + profileAvatar + '\'' +
                 ", name='" + name + '\'' +
+                ", token='" + token + '\'' +
                 '}';
     }
 }
