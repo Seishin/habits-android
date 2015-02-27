@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Habits</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="login">Login</string>
+    <string name="register">You\'re new? Tap here to register!</string>
+    <string name="hint_username">Username</string>
+    <string name="btn_register">register</string>
 </resources>

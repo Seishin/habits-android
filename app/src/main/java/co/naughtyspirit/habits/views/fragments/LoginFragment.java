@@ -28,6 +28,7 @@ import co.naughtyspirit.habits.views.interfaces.OnViewPagerFragmentChange;
 public class LoginFragment extends Fragment implements OnClickListener {
 
     private static final String TAG = LoginFragment.class.getName();
+    
     private View view;
     private EditText email;
     private EditText password;

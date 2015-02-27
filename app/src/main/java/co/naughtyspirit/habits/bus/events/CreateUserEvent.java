@@ -9,13 +9,13 @@ import co.naughtyspirit.habits.net.models.User;
  * * NaughtySpirit 2015
  */
 public class CreateUserEvent {
-    
+
     private User user;
-    
+
     public CreateUserEvent(User user) {
         this.user = user;
     }
-
+    
     public User getUser() {
         return user;
     }

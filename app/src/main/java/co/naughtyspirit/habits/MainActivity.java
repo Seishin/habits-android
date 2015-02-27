@@ -1,61 +1,68 @@
 package co.naughtyspirit.habits;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 
 import com.squareup.otto.Subscribe;
 
+import co.naughtyspirit.habits.auth.AuthProviderFactory;
 import co.naughtyspirit.habits.bus.BusProvider;
-import co.naughtyspirit.habits.bus.events.CreateUserEvent;
-import co.naughtyspirit.habits.bus.events.LoginUserEvent;
-import co.naughtyspirit.habits.views.adapters.MainScreenFragmentsAdapter;
-import co.naughtyspirit.habits.views.interfaces.OnViewPagerFragmentChange;
-import co.naughtyspirit.habits.views.transforms.ZoomOutPageTransformer;
+import co.naughtyspirit.habits.bus.events.GetUserStatsEvent;
+import co.naughtyspirit.habits.bus.producers.UserEventsProducer;
 
 /**
- * Created by Seishin <atanas@naughtyspirit.co>
- * on 2/22/15.
- * 
- * NaughtySpirit 2015
+ * * Created by Seishin <atanas@naughtyspirit.co>
+ * * on 2/27/15.
+ * *
+ * * NaughtySpirit 2015
  */
-public class MainActivity extends FragmentActivity implements OnViewPagerFragmentChange {
+public class MainActivity extends ActionBarActivity implements OnClickListener {
 
     private static final String TAG = MainActivity.class.getName();
-    private ViewPager viewPager;
-    private MainScreenFragmentsAdapter viewPagerAdapter;
+    
+    private Button logout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        UserEventsProducer.produceGetUserStatsEvent(this);
         
         initUI();
     }
 
     private void initUI() {
-        viewPagerAdapter = new MainScreenFragmentsAdapter(getSupportFragmentManager());
-        
-        viewPager = (ViewPager) findViewById(R.id.pager);
-        viewPager.setAdapter(viewPagerAdapter);
-        viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+        logout = (Button) findViewById(R.id.logout);
+        logout.setOnClickListener(this);
     }
 
-    @Subscribe
-    public void onUserCreated(CreateUserEvent event) {
-        Log.e(TAG, event.getUser().toString());
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.logout:
+                AuthProviderFactory.getProvider(this).logout();
+                Intent intent = new Intent(MainActivity.this, AuthActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                break;
+        }
     }
     
     @Subscribe
-    public void onUserLoggedIn(LoginUserEvent event) {
-        Log.e(TAG, event.getUser().toString());
+    public void onUserStatsObtained(GetUserStatsEvent event) {
+        Log.e(TAG, event.getStats().toString());
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
+        
         BusProvider.getInstance().register(this);
     }
 
@@ -64,10 +71,5 @@ public class MainActivity extends FragmentActivity implements OnViewPagerFragmen
         super.onPause();
         
         BusProvider.getInstance().unregister(this);
-    }
-
-    @Override
-    public void setFragmentAt(int position) {
-        viewPager.setCurrentItem(position);
     }
 }

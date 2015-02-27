@@ -26,10 +26,10 @@ import co.naughtyspirit.habits.views.interfaces.OnViewPagerFragmentChange;
 public class RegisterFragment extends Fragment implements OnClickListener{
 
     private static final String TAG = RegisterFragment.class.getName();
+
     private View view;
     private Activity activity;
-    private Button back;
-    
+
     private OnViewPagerFragmentChange callback;
     private EditText name;
     private EditText email;
@@ -51,15 +51,12 @@ public class RegisterFragment extends Fragment implements OnClickListener{
     }
 
     private void initUI() {
-        name = (EditText) view.findViewById(R.id.name);
+        name = (EditText) view.findViewById(R.id.username);
         email = (EditText) view.findViewById(R.id.email);
         password = (EditText) view.findViewById(R.id.password);
         
         submit = (Button) view.findViewById(R.id.submit);
         submit.setOnClickListener(this);
-        
-        back = (Button) view.findViewById(R.id.back);
-        back.setOnClickListener(this);
     }
 
     @Override
@@ -72,10 +69,6 @@ public class RegisterFragment extends Fragment implements OnClickListener{
                 user.setName(name.getText().toString());
 
                 UserEventsProducer.produceUserCreatedEvent(user);
-                break;
-            
-            case R.id.back:
-                callback.setFragmentAt(0);
                 break;
         }
     }

@@ -1,6 +1,7 @@
 package co.naughtyspirit.habits.net;
 
 import co.naughtyspirit.habits.net.models.User;
+import co.naughtyspirit.habits.net.models.UserStats;
 import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.GET;
@@ -29,5 +30,5 @@ public interface HabitsApi {
     void getUserById(@Path("userId") String userId, Callback<User> callback);
     
     @GET("/users/stats")
-    void getUserStats(@Header("Authorization") String token, Callback<User> callback);
+    void getUserStats(@Header("Authorization") String token, Callback<UserStats> callback);
 }
