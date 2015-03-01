@@ -6,8 +6,8 @@ package co.naughtyspirit.habits.bus.events;
  * *
  * * NaughtySpirit 2015
  */
-public class AuthFailureEvent extends BaseFailureEvent {
-    public AuthFailureEvent(String message) {
+public class HabitsFailureEvent extends BaseFailureEvent {
+    public HabitsFailureEvent(String message) {
         this.message = message;
     }
 }

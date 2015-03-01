@@ -15,13 +15,17 @@ import co.naughtyspirit.habits.utils.SharedPreferencesUtil;
 public class DefaultAuthProvider implements AuthProvider {
     
     private static final String TAG = DefaultAuthProvider.class.getName();
-    private static final String CLASS_NAME = "co.naughtyspirit.habits.auth.DefaultAuthProvider";
+
     private Context ctx;
+
+    @Override
+    public void setContext(Context ctx) {
+        this.ctx = ctx;
+    }
 
     @Override
     public boolean login(User user) {
         if (user != null) {
-            SharedPreferencesUtil.setPreference(ctx, Constants.KEY_LOGIN_PROVIDER, CLASS_NAME);
             SharedPreferencesUtil.setPreference(ctx, Constants.KEY_AUTH_TOKEN, user.getToken());
             SharedPreferencesUtil.setPreference(ctx, Constants.KEY_USER_ID, user.getId());
             SharedPreferencesUtil.setPreference(ctx, Constants.KEY_USER_NAME, user.getName());
@@ -48,12 +52,13 @@ public class DefaultAuthProvider implements AuthProvider {
     }
 
     @Override
-    public String getAuthToken() {
-        return SharedPreferencesUtil.getStringPreference(ctx, Constants.KEY_AUTH_TOKEN);
-    }
+    public User getUser() {
+        User user = new User();
+        user.setId(SharedPreferencesUtil.getStringPreference(ctx, Constants.KEY_USER_ID));
+        user.setToken(SharedPreferencesUtil.getStringPreference(ctx, Constants.KEY_AUTH_TOKEN));
+        user.setEmail(SharedPreferencesUtil.getStringPreference(ctx, Constants.KEY_USER_EMAIL));
+        user.setName(SharedPreferencesUtil.getStringPreference(ctx, Constants.KEY_USER_NAME));
 
-    @Override
-    public void setContext(Context ctx) {
-        this.ctx = ctx;
+        return user;
     }
 }

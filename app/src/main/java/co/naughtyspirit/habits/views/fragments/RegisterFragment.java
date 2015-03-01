@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import co.naughtyspirit.habits.R;
+import co.naughtyspirit.habits.auth.AuthProviderFactory;
+import co.naughtyspirit.habits.auth.DefaultAuthProvider;
 import co.naughtyspirit.habits.bus.producers.UserEventsProducer;
 import co.naughtyspirit.habits.net.models.User;
 import co.naughtyspirit.habits.views.interfaces.OnViewPagerFragmentChange;
@@ -68,7 +70,7 @@ public class RegisterFragment extends Fragment implements OnClickListener{
                 user.setPassword(password.getText().toString());
                 user.setName(name.getText().toString());
 
-                UserEventsProducer.produceUserCreatedEvent(user);
+                UserEventsProducer.produceUserCreatedEvent(activity, DefaultAuthProvider.class.getCanonicalName(), user);
                 break;
         }
     }

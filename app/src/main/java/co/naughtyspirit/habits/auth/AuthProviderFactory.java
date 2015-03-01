@@ -16,24 +16,29 @@ public class AuthProviderFactory {
     private static final String TAG = AuthProviderFactory.class.getName();
     
     private static AuthProvider provider;
+    private static Context ctx;
 
-    public static AuthProvider getProvider(Context ctx) {
+    public static AuthProvider getProvider() {
         if (provider == null) {
             try {
-                if (SharedPreferencesUtil.getStringPreference(ctx, Constants.KEY_LOGIN_PROVIDER) != null) {
-                    provider = (AuthProvider) Class.forName(SharedPreferencesUtil.getStringPreference(ctx,
-                            Constants.KEY_LOGIN_PROVIDER)).newInstance();
-                    provider.setContext(ctx);
-
-                } else {
-                    provider = new DefaultAuthProvider();
-                    provider.setContext(ctx);
-                }
+                provider = (AuthProvider) Class.forName(SharedPreferencesUtil.getStringPreference(ctx,
+                        Constants.KEY_LOGIN_PROVIDER)).newInstance();
+                provider.setContext(ctx);
             } catch (Exception e) {
-                Log.e(TAG, e.getMessage());
+                Log.e(TAG, "Cannot get instance of the auth provider.");
             }
         }
         
         return provider;
+    }
+    
+    public static void onCreate(Context ctx) {
+        AuthProviderFactory.ctx = ctx;
+
+        setAuthProvider(DefaultAuthProvider.class.getCanonicalName());
+    }
+    
+    public static void setAuthProvider(String provider) {
+        SharedPreferencesUtil.setPreference(ctx, Constants.KEY_LOGIN_PROVIDER, provider);
     }
 }

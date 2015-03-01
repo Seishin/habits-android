@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" 
+    android:layout_height="match_parent"
+    android:padding="30dp">
+
+    <RelativeLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/accent_material_light">
+        
+        <RelativeLayout
+            android:id="@+id/create_new"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            
+            <EditText
+                android:id="@+id/text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toLeftOf="@+id/submit"/>
+            
+            <Button
+                android:id="@+id/submit"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"/>
+            </RelativeLayout>
+        
+        <ListView
+            android:id="@+id/list_habits"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/create_new"/>
+        
+        </RelativeLayout>
+</RelativeLayout>

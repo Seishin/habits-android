@@ -1,11 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" 
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/bg">
 
     <Button
         android:id="@+id/logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="LOGOUT"/>
+
+    <android.support.v4.view.ViewPager
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/tasks_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/stats"/>
+    
+    <RelativeLayout
+        android:id="@+id/stats"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/button_material_light"
+        android:layout_alignParentBottom="true">
+
+        <RelativeLayout
+            android:id="@+id/bg_hp"
+            android:layout_width="match_parent"
+            android:layout_height="18dp"
+            android:background="@color/dim_foreground_disabled_material_dark"
+            android:layout_above="@+id/bg_exp">
+
+
+            <ImageView
+                android:id="@+id/hp_mask"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#259b24"/>
+
+            <TextView
+                android:id="@+id/hp_value"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:gravity="center"/>
+        </RelativeLayout>
+        
+        <RelativeLayout
+            android:id="@+id/bg_exp"
+            android:layout_width="match_parent"
+            android:layout_height="18dp"
+            android:background="@color/dim_foreground_disabled_material_dark"
+            android:layout_alignParentBottom="true">
+            
+            <TextView
+                android:id="@+id/level"
+                android:layout_width="25dp"
+                android:layout_height="match_parent" 
+                android:layout_alignParentLeft="true"
+                android:gravity="center"/>
+            
+            <ImageView
+                android:id="@+id/exp_mask"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/level"
+                android:layout_toLeftOf="@+id/next_lvl"
+                android:background="@color/bg_login"/>
+
+            <TextView
+                android:id="@+id/exp_value"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/next_lvl"
+                android:layout_width="25dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:gravity="center"/>
+            </RelativeLayout>
+     </RelativeLayout>
 </RelativeLayout>

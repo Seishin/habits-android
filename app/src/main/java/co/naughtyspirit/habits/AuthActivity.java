@@ -13,7 +13,7 @@ import co.naughtyspirit.habits.bus.BusProvider;
 import co.naughtyspirit.habits.bus.events.AuthFailureEvent;
 import co.naughtyspirit.habits.bus.events.CreateUserEvent;
 import co.naughtyspirit.habits.bus.events.LoginUserEvent;
-import co.naughtyspirit.habits.views.adapters.MainScreenFragmentsAdapter;
+import co.naughtyspirit.habits.views.adapters.AuthScreenFragmentsAdapter;
 import co.naughtyspirit.habits.views.interfaces.OnViewPagerFragmentChange;
 import co.naughtyspirit.habits.views.transforms.ZoomOutPageTransformer;
 
@@ -27,24 +27,20 @@ public class AuthActivity extends FragmentActivity implements OnViewPagerFragmen
 
     private static final String TAG = AuthActivity.class.getName();
     private ViewPager viewPager;
-    private MainScreenFragmentsAdapter viewPagerAdapter;
+    private AuthScreenFragmentsAdapter viewPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
+
+        AuthProviderFactory.onCreate(this);
     
-        if (AuthProviderFactory.getProvider(this).isUserLoggedIn()) {
-            Intent intent = new Intent(AuthActivity.this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-        }
-        
         initUI();
     }
 
     private void initUI() {
-        viewPagerAdapter = new MainScreenFragmentsAdapter(getSupportFragmentManager());
+        viewPagerAdapter = new AuthScreenFragmentsAdapter(getSupportFragmentManager());
         
         viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(viewPagerAdapter);
@@ -53,7 +49,7 @@ public class AuthActivity extends FragmentActivity implements OnViewPagerFragmen
 
     @Subscribe
     public void onUserCreatedSuccess(CreateUserEvent event) {
-        boolean success = AuthProviderFactory.getProvider(this).login(event.getUser());
+        boolean success = AuthProviderFactory.getProvider().login(event.getUser());
         
         if (success) {
             Intent intent = new Intent(AuthActivity.this, MainActivity.class);
@@ -68,7 +64,7 @@ public class AuthActivity extends FragmentActivity implements OnViewPagerFragmen
     
     @Subscribe
     public void onUserLoggedInSuccess(LoginUserEvent event) {
-        boolean success = AuthProviderFactory.getProvider(this).login(event.getUser());
+        boolean success = AuthProviderFactory.getProvider().login(event.getUser());
 
         if (success) {
             Intent intent = new Intent(AuthActivity.this, MainActivity.class);

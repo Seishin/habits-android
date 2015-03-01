@@ -13,8 +13,10 @@ import co.naughtyspirit.habits.net.models.User;
 public interface AuthProvider {
     
     public void setContext(Context ctx);
+    
     public boolean login(User user);
     public void logout();
     public boolean isUserLoggedIn();
-    public String getAuthToken();
+ 
+    public User getUser();
 }

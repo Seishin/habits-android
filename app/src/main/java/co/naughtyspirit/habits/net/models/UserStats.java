@@ -10,7 +10,8 @@ public class UserStats {
     
     private int hp;
     private int exp;
-    private int nextLvlExp;
+    private int minLvlExp;
+    private int maxLvlExp;
     private int gold;
     private int lvl;
     private boolean alive;
@@ -55,12 +56,20 @@ public class UserStats {
         this.alive = alive;
     }
 
-    public int getNextLvlExp() {
-        return nextLvlExp;
+    public int getMinLvlExp() {
+        return minLvlExp;
     }
 
-    public void setNextLvlExp(int nextLvlExp) {
-        this.nextLvlExp = nextLvlExp;
+    public void setMinLvlExp(int minLvlExp) {
+        this.minLvlExp = minLvlExp;
+    }
+
+    public int getMaxLvlExp() {
+        return maxLvlExp;
+    }
+
+    public void setMaxLvlExp(int maxLvlExp) {
+        this.maxLvlExp = maxLvlExp;
     }
 
     @Override
@@ -68,7 +77,8 @@ public class UserStats {
         return "UserStats{" +
                 "hp=" + hp +
                 ", exp=" + exp +
-                ", nextLvlExp=" + nextLvlExp +
+                ", minLvlExp=" + minLvlExp +
+                ", maxLvlExp=" + maxLvlExp +
                 ", gold=" + gold +
                 ", lvl=" + lvl +
                 ", alive=" + alive +
