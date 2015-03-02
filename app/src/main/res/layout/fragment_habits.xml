@@ -2,37 +2,70 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" 
     android:layout_height="match_parent"
-    android:padding="30dp">
+    android:padding="15dp"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true">
 
     <RelativeLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/accent_material_light">
+        android:background="@drawable/bg_task"
+        android:paddingLeft="32dp"
+        android:paddingRight="30dp"
+        android:paddingBottom="20dp"
+        android:paddingTop="8dp">
+        
+        <TextView
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
+            android:text="Habits"
+            android:textColor="#B4f3a602"
+            android:textSize="18sp"/>
         
         <RelativeLayout
             android:id="@+id/create_new"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="50dp"
+            android:layout_below="@+id/header"
+            android:layout_marginTop="3dp"
+            android:layout_marginRight="3dp"
+            android:paddingLeft="15dp"
+            android:background="#30000000">
             
             <EditText
                 android:id="@+id/text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_toLeftOf="@+id/submit"/>
+                android:layout_toLeftOf="@+id/submit"
+                android:hint="New Habit..."
+                android:textColorHint="#69FFFFFF"
+                android:textColor="#B4FFFFFF"
+                android:textSize="15sp"
+                android:background="@android:color/transparent"
+                android:gravity="center_vertical"/>
             
             <Button
                 android:id="@+id/submit"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:layout_alignParentRight="true"/>
+                android:layout_alignParentRight="true"
+                android:background="@android:color/transparent"
+                android:text="+"
+                android:textSize="27sp"
+                android:gravity="center"
+                android:textColor="@android:color/white"/>
             </RelativeLayout>
         
         <ListView
             android:id="@+id/list_habits"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/create_new"/>
+            android:layout_below="@+id/create_new"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"/>
         
         </RelativeLayout>
 </RelativeLayout>

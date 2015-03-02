@@ -1,4 +1,6 @@
-package co.naughtyspirit.habits.bus.events;
+package co.naughtyspirit.habits.bus.events.users;
+
+import co.naughtyspirit.habits.bus.events.BaseFailureEvent;
 
 /**
  * * Created by Seishin <atanas@naughtyspirit.co>

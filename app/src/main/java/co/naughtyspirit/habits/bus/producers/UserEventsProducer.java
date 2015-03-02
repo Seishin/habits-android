@@ -6,10 +6,10 @@ import com.squareup.otto.Produce;
 
 import co.naughtyspirit.habits.auth.AuthProviderFactory;
 import co.naughtyspirit.habits.bus.BusProvider;
-import co.naughtyspirit.habits.bus.events.AuthFailureEvent;
-import co.naughtyspirit.habits.bus.events.CreateUserEvent;
-import co.naughtyspirit.habits.bus.events.GetUserStatsEvent;
-import co.naughtyspirit.habits.bus.events.LoginUserEvent;
+import co.naughtyspirit.habits.bus.events.users.AuthFailureEvent;
+import co.naughtyspirit.habits.bus.events.users.CreateUserEvent;
+import co.naughtyspirit.habits.bus.events.users.GetUserStatsEvent;
+import co.naughtyspirit.habits.bus.events.users.LoginUserEvent;
 import co.naughtyspirit.habits.net.HabitsApiClient;
 import co.naughtyspirit.habits.net.models.User;
 import co.naughtyspirit.habits.net.models.UserStats;

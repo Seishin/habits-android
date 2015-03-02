@@ -43,5 +43,5 @@ public interface HabitsApi {
     void createHabit(@Header("Authorization") String token, @Query("userId") String userId, @Body Habit habit, Callback<Habit> cb);
     
     @POST("/habits/increment/{habitId}/")
-    void incrementHabit(@Header("Authorization") String token, @Query("userId") String userId, @Path("habitId") String habitId, Callback<Response> cb);
+    void incrementHabit(@Header("Authorization") String token, @Query("userId") String userId, @Path("habitId") String habitId, Callback<Habit> cb);
 }

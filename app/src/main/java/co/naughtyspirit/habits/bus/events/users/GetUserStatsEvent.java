@@ -1,4 +1,4 @@
-package co.naughtyspirit.habits.bus.events;
+package co.naughtyspirit.habits.bus.events.users;
 
 import co.naughtyspirit.habits.net.models.UserStats;
 

@@ -1,17 +1,13 @@
 package co.naughtyspirit.habits;
 
 import android.content.Intent;
-import android.hardware.display.DisplayManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -21,7 +17,7 @@ import com.squareup.otto.Subscribe;
 
 import co.naughtyspirit.habits.auth.AuthProviderFactory;
 import co.naughtyspirit.habits.bus.BusProvider;
-import co.naughtyspirit.habits.bus.events.GetUserStatsEvent;
+import co.naughtyspirit.habits.bus.events.users.GetUserStatsEvent;
 import co.naughtyspirit.habits.bus.producers.UserEventsProducer;
 import co.naughtyspirit.habits.views.adapters.MainScreenFragmentsAdapter;
 import co.naughtyspirit.habits.views.transforms.ZoomOutPageTransformer;
@@ -48,6 +44,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
     private int displayWidth;
     private TextView level;
     private TextView nextLevel;
+    private TextView gold;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +60,8 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
     private void initUI() {
         displayWidth = getResources().getDisplayMetrics().widthPixels;
+        
+        gold = (TextView) findViewById(R.id.gold);
         
         viewPager = (ViewPager) findViewById(R.id.tasks_pager);
         viewPager.setAdapter(new MainScreenFragmentsAdapter(getSupportFragmentManager()));
@@ -95,11 +94,13 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
     
     @Subscribe
     public void onUserStatsObtained(GetUserStatsEvent event) {
+        gold.setText(String.valueOf(event.getStats().getGold()));
+        
         level.setText(String.valueOf(event.getStats().getLvl()));
         nextLevel.setText(String.valueOf(event.getStats().getLvl() + 1));
-        
+
         expValue.setText(event.getStats().getExp() + " / " + event.getStats().getMaxLvlExp());
-        expBarMask.getLayoutParams().width = getViewWidth(displayWidth, event.getStats().getExp(), event.getStats().getMinLvlExp(),
+        expBarMask.getLayoutParams().width = getViewWidth(getExpBarWidth(), event.getStats().getExp(), event.getStats().getMinLvlExp(),
                 event.getStats().getMaxLvlExp());
 
         hpValue.setText(event.getStats().getHp() + " / 100");
@@ -109,7 +110,11 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
     private int getViewWidth(int width, int value, int minValue, int maxValue) {
         return (value - minValue) * width / (maxValue - minValue);
     }
-
+    
+    private int getExpBarWidth() {
+        return displayWidth - (level.getWidth() + nextLevel.getWidth());
+    }
+    
     @Override
     protected void onResume() {
         super.onResume();

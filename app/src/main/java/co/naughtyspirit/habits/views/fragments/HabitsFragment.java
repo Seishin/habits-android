@@ -18,11 +18,10 @@ import com.squareup.otto.Subscribe;
 import co.naughtyspirit.habits.R;
 import co.naughtyspirit.habits.auth.AuthProviderFactory;
 import co.naughtyspirit.habits.bus.BusProvider;
-import co.naughtyspirit.habits.bus.events.CreateHabitEvent;
-import co.naughtyspirit.habits.bus.events.GetHabitsEvent;
-import co.naughtyspirit.habits.bus.events.GetUserStatsEvent;
-import co.naughtyspirit.habits.bus.events.HabitsFailureEvent;
-import co.naughtyspirit.habits.bus.events.IncrementHabitEvent;
+import co.naughtyspirit.habits.bus.events.habits.CreateHabitEvent;
+import co.naughtyspirit.habits.bus.events.habits.GetHabitsEvent;
+import co.naughtyspirit.habits.bus.events.habits.HabitsFailureEvent;
+import co.naughtyspirit.habits.bus.events.habits.IncrementHabitEvent;
 import co.naughtyspirit.habits.bus.producers.HabitEventsProducer;
 import co.naughtyspirit.habits.bus.producers.UserEventsProducer;
 import co.naughtyspirit.habits.net.models.Habit;
@@ -64,6 +63,8 @@ public class HabitsFragment extends Fragment implements OnClickListener {
 
     private void initUI() {
         createHabitText = (EditText) view.findViewById(R.id.text);
+        createHabitText.clearFocus();
+        
         createHabitSubmit = (Button) view.findViewById(R.id.submit);
         createHabitSubmit.setOnClickListener(this);
         
@@ -89,6 +90,7 @@ public class HabitsFragment extends Fragment implements OnClickListener {
     
     @Subscribe
     public void onIncrementHabitSuccess(IncrementHabitEvent event) {
+        habitsListAdapter.updateItem(event.getHabit());
         UserEventsProducer.produceGetUserStatsEvent(activity);
     }
 

@@ -3,4 +3,8 @@
     <color name="white_69">#69FFFFFF</color>
     <color name="white_F0">#F0FFFFFF</color>
     <color name="bg_login">#69ce9c3d</color>
+    
+    <color name="bg_weak">#30ffea00</color>
+    <color name="bg_medium">#305ec800</color>
+    <color name="bg_strong">#300096ff</color>
 </resources>

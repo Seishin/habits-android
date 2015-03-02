@@ -12,6 +12,7 @@ public class Habit {
     @SerializedName("_id")
     private String id;
     private String text;
+    private int state;
 
     public Habit(String text) {
         this.text = text;
@@ -33,11 +34,20 @@ public class Habit {
         this.id = id;
     }
 
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
     @Override
     public String toString() {
         return "Habit{" +
                 "id='" + id + '\'' +
                 ", text='" + text + '\'' +
+                ", state=" + state +
                 '}';
     }
 }

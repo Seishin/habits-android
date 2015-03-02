@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -37,10 +38,13 @@ public class HabitsListAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         View view = convertView;
         
+        Habit habit = ((Habit) getItem(position));
+        
         if (view == null) {
             view = inflater.inflate(R.layout.layout_cell_habit, parent, false);
             
             viewHolder = new ViewHolder();
+            viewHolder.cell = (RelativeLayout) view.findViewById(R.id.cell);
             viewHolder.text = (TextView) view.findViewById(R.id.text);
             viewHolder.increment = (Button) view.findViewById(R.id.increment);
             
@@ -49,7 +53,21 @@ public class HabitsListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) view.getTag(); 
         }
         
-        viewHolder.text.setText(((Habit) getItem(position)).getText());
+        switch (habit.getState()) {
+            case 0:
+                viewHolder.cell.setBackgroundColor(ctx.getResources().getColor(R.color.bg_weak));
+                break;
+
+            case 1:
+                viewHolder.cell.setBackgroundColor(ctx.getResources().getColor(R.color.bg_medium));
+                break;
+
+            case 2:
+                viewHolder.cell.setBackgroundColor(ctx.getResources().getColor(R.color.bg_strong));
+                break;
+        }
+        
+        viewHolder.text.setText(habit.getText());
         viewHolder.increment.setOnClickListener(null);
         viewHolder.increment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,7 +106,18 @@ public class HabitsListAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
     
+    public void updateItem(Habit habit) {
+        for (Habit h : habits) {
+            if (h.getId().equals(habit.getId())) {
+                h.setState(habit.getState());
+                notifyDataSetChanged();
+                break;
+            }
+        }
+    }
+    
     static class ViewHolder {
+        RelativeLayout cell;
         TextView text;
         Button increment;
     }

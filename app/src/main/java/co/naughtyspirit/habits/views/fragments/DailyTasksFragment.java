@@ -11,19 +11,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
-
-import com.squareup.otto.Subscribe;
 
 import co.naughtyspirit.habits.R;
-import co.naughtyspirit.habits.auth.AuthProviderFactory;
 import co.naughtyspirit.habits.bus.BusProvider;
-import co.naughtyspirit.habits.bus.events.CreateHabitEvent;
-import co.naughtyspirit.habits.bus.events.GetHabitsEvent;
-import co.naughtyspirit.habits.bus.events.HabitsFailureEvent;
-import co.naughtyspirit.habits.bus.producers.HabitEventsProducer;
-import co.naughtyspirit.habits.net.models.Habit;
-import co.naughtyspirit.habits.views.adapters.HabitsListAdapter;
 
 /**
  * * Created by Seishin <atanas@naughtyspirit.co>

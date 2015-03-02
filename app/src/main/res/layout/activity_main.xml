@@ -2,35 +2,87 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" 
     android:layout_height="match_parent"
-    android:background="@drawable/bg">
+    android:background="@drawable/bg_home"
+    android:isScrollContainer="false">
 
     <Button
         android:id="@+id/logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="LOGOUT"/>
+        android:text="LOGOUT"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"/>
+    
+    <RelativeLayout
+        android:id="@+id/top_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+        
+        <Button
+            android:id="@+id/player"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/ic_player"
+            />
+        
+        <ImageView
+            android:id="@+id/coin"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_toLeftOf="@+id/gold"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/coin"/>
+
+        <TextView
+            android:id="@+id/gold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textColor="@android:color/white"/>
+
+        <Button
+            android:id="@+id/settings"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/ic_settings"
+            android:layout_alignParentRight="true"
+            />
+        
+        </RelativeLayout>
 
     <android.support.v4.view.ViewPager
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/tasks_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/top_panel"
         android:layout_above="@+id/stats"/>
-    
+
     <RelativeLayout
         android:id="@+id/stats"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@color/button_material_light"
+        android:layout_height="36dp"
         android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/level"
+            android:layout_width="25dp"
+            android:layout_height="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"/>
 
         <RelativeLayout
             android:id="@+id/bg_hp"
             android:layout_width="match_parent"
-            android:layout_height="18dp"
-            android:background="@color/dim_foreground_disabled_material_dark"
-            android:layout_above="@+id/bg_exp">
-
+            android:layout_height="10dp"
+            android:layout_above="@+id/bg_exp"
+            android:layout_toRightOf="@+id/level"
+            android:layout_toLeftOf="@+id/next_lvl"
+            android:background="#50259b24">
 
             <ImageView
                 android:id="@+id/hp_mask"
@@ -43,44 +95,53 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:textSize="7sp"
+                android:textColor="@android:color/white"
+                android:shadowRadius="1"
+                android:shadowDy="1"
+                android:shadowDx="1"
+                android:shadowColor="@android:color/black"/>
         </RelativeLayout>
-        
+
         <RelativeLayout
             android:id="@+id/bg_exp"
             android:layout_width="match_parent"
-            android:layout_height="18dp"
-            android:background="@color/dim_foreground_disabled_material_dark"
-            android:layout_alignParentBottom="true">
-            
-            <TextView
-                android:id="@+id/level"
-                android:layout_width="25dp"
-                android:layout_height="match_parent" 
-                android:layout_alignParentLeft="true"
-                android:gravity="center"/>
+            android:layout_height="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/level"
+            android:layout_toLeftOf="@+id/next_lvl"
+            android:background="#50f4ca09">
             
             <ImageView
                 android:id="@+id/exp_mask"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_toRightOf="@+id/level"
-                android:layout_toLeftOf="@+id/next_lvl"
-                android:background="@color/bg_login"/>
+                android:background="#f4ca09"/>
 
             <TextView
                 android:id="@+id/exp_value"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:textSize="7sp"
+                android:textColor="@android:color/white"
+                android:shadowRadius="1"
+                android:shadowDy="1"
+                android:shadowDx="1"
+                android:shadowColor="@android:color/black"/>
 
-            <TextView
-                android:id="@+id/next_lvl"
-                android:layout_width="25dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:gravity="center"/>
             </RelativeLayout>
+
+        <TextView
+            android:id="@+id/next_lvl"
+            android:layout_width="25dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"/>
      </RelativeLayout>
 </RelativeLayout>

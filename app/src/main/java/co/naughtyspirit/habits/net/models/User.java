@@ -1,5 +1,7 @@
 package co.naughtyspirit.habits.net.models;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * * Created by Seishin <atanas@naughtyspirit.co>
  * * on 2/22/15.
@@ -8,6 +10,7 @@ package co.naughtyspirit.habits.net.models;
  */
 public class User {
     
+    @SerializedName("_id")
     private String id;
     private String email;
     private String password;

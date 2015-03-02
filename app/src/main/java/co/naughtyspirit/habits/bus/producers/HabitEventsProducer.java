@@ -5,10 +5,10 @@ import android.util.Log;
 import com.squareup.otto.Produce;
 
 import co.naughtyspirit.habits.bus.BusProvider;
-import co.naughtyspirit.habits.bus.events.CreateHabitEvent;
-import co.naughtyspirit.habits.bus.events.GetHabitsEvent;
-import co.naughtyspirit.habits.bus.events.HabitsFailureEvent;
-import co.naughtyspirit.habits.bus.events.IncrementHabitEvent;
+import co.naughtyspirit.habits.bus.events.habits.CreateHabitEvent;
+import co.naughtyspirit.habits.bus.events.habits.GetHabitsEvent;
+import co.naughtyspirit.habits.bus.events.habits.HabitsFailureEvent;
+import co.naughtyspirit.habits.bus.events.habits.IncrementHabitEvent;
 import co.naughtyspirit.habits.net.HabitsApiClient;
 import co.naughtyspirit.habits.net.models.Habit;
 import co.naughtyspirit.habits.net.models.HabitsList;
@@ -62,11 +62,11 @@ public class HabitEventsProducer extends BaseEventProducer {
     
     @Produce
     public static void produceIncrementHabitEvent(User user, Habit habit) {
-        HabitsApiClient.getClient().incrementHabit(user.getToken(), user.getId(), habit.getId(), new Callback<Response>() {
+        HabitsApiClient.getClient().incrementHabit(user.getToken(), user.getId(), habit.getId(), new Callback<Habit>() {
             @Override
-            public void success(Response response, Response response2) {
+            public void success(Habit habit, Response response) {
                 if (response.getStatus() == 200) {
-                    BusProvider.getInstance().post(new IncrementHabitEvent());
+                    BusProvider.getInstance().post(new IncrementHabitEvent(habit));
                 }
             }
 

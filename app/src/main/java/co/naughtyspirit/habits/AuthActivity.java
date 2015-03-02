@@ -10,9 +10,9 @@ import com.squareup.otto.Subscribe;
 
 import co.naughtyspirit.habits.auth.AuthProviderFactory;
 import co.naughtyspirit.habits.bus.BusProvider;
-import co.naughtyspirit.habits.bus.events.AuthFailureEvent;
-import co.naughtyspirit.habits.bus.events.CreateUserEvent;
-import co.naughtyspirit.habits.bus.events.LoginUserEvent;
+import co.naughtyspirit.habits.bus.events.users.AuthFailureEvent;
+import co.naughtyspirit.habits.bus.events.users.CreateUserEvent;
+import co.naughtyspirit.habits.bus.events.users.LoginUserEvent;
 import co.naughtyspirit.habits.views.adapters.AuthScreenFragmentsAdapter;
 import co.naughtyspirit.habits.views.interfaces.OnViewPagerFragmentChange;
 import co.naughtyspirit.habits.views.transforms.ZoomOutPageTransformer;
