@@ -5,14 +5,6 @@
     android:background="@drawable/bg_home"
     android:isScrollContainer="false">
 
-    <Button
-        android:id="@+id/logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="LOGOUT"
-        android:layout_centerHorizontal="true"
-        android:visibility="gone"/>
-    
     <RelativeLayout
         android:id="@+id/top_panel"
         android:layout_width="match_parent"
