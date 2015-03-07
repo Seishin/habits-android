@@ -109,7 +109,7 @@ public class HabitsListAdapter extends BaseAdapter {
     public void updateItem(Habit habit) {
         for (Habit h : habits) {
             if (h.getId().equals(habit.getId())) {
-                h.setState(habit.getState());
+                h.setState(String.valueOf(habit.getState()));
                 notifyDataSetChanged();
                 break;
             }

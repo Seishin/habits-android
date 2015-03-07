@@ -1,5 +1,7 @@
 package co.naughtyspirit.habits.net.models;
 
+import android.text.TextUtils;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -12,7 +14,7 @@ public class Habit {
     @SerializedName("_id")
     private String id;
     private String text;
-    private int state;
+    private String state;
 
     public Habit(String text) {
         this.text = text;
@@ -35,10 +37,14 @@ public class Habit {
     }
 
     public int getState() {
-        return state;
+        if (TextUtils.isEmpty(state)) {
+            return 0;
+        } else {
+            return Integer.valueOf(state);
+        }
     }
 
-    public void setState(int state) {
+    public void setState(String state) {
         this.state = state;
     }
 

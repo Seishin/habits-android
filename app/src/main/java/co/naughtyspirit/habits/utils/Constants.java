@@ -8,7 +8,8 @@ package co.naughtyspirit.habits.utils;
  */
 public class Constants {
     
-//    public static final String API_ENDPOINT = "http://10.0.3.2:3000";
+//    public static final String API_ENDPOINT = "http://10.0.3.2:8080";
+//    public static final String API_ENDPOINT = "http://10.0.2.2:8080";
     public static final String API_ENDPOINT = "http://habits-app.herokuapp.com";
 
 

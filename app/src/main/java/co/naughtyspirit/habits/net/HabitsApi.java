@@ -37,11 +37,11 @@ public interface HabitsApi {
     void getUserStats(@Header("Authorization") String token, @Path("userId") String userId, Callback<UserStats> callback);
     
     @GET("/habits/all/")
-    void getHabits(@Header("Authorization") String token, @Query("userId") String userId, Callback<HabitsList> cb);
+    void getHabits(@Header("Authorization") String token, @Query("userId") String userId, @Query("date") String date, Callback<HabitsList> cb);
     
     @POST("/habits/")
     void createHabit(@Header("Authorization") String token, @Query("userId") String userId, @Body Habit habit, Callback<Habit> cb);
     
     @POST("/habits/increment/{habitId}/")
-    void incrementHabit(@Header("Authorization") String token, @Query("userId") String userId, @Path("habitId") String habitId, Callback<Habit> cb);
+    void incrementHabit(@Header("Authorization") String token, @Query("userId") String userId, @Query("date") String date, @Path("habitId") String habitId, Callback<Habit> cb);
 }
