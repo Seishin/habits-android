@@ -1,15 +1,13 @@
-package co.naughtyspirit.habits.views.adapters;
+package co.naughtyspirit.habits.ui.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import co.naughtyspirit.habits.views.fragments.DailyTasksFragment;
-import co.naughtyspirit.habits.views.fragments.HabitsFragment;
-import co.naughtyspirit.habits.views.fragments.LoginFragment;
-import co.naughtyspirit.habits.views.fragments.RegisterFragment;
-import co.naughtyspirit.habits.views.fragments.RewardsFragment;
-import co.naughtyspirit.habits.views.fragments.ToDoTasksFragment;
+import co.naughtyspirit.habits.ui.fragments.DailyTasksFragment;
+import co.naughtyspirit.habits.ui.fragments.HabitsFragment;
+import co.naughtyspirit.habits.ui.fragments.RewardsFragment;
+import co.naughtyspirit.habits.ui.fragments.ToDoTasksFragment;
 
 /**
  * * Created by Seishin <atanas@naughtyspirit.co>

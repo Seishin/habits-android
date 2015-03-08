@@ -1,4 +1,4 @@
-package co.naughtyspirit.habits.views.fragments;
+package co.naughtyspirit.habits.ui.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -21,14 +21,14 @@ import co.naughtyspirit.habits.bus.BusProvider;
  * *
  * * NaughtySpirit 2015
  */
-public class ToDoTasksFragment extends Fragment implements OnClickListener {
+public class RewardsFragment extends Fragment implements OnClickListener {
 
-    private static final String TAG = ToDoTasksFragment.class.getName();
+    private static final String TAG = RewardsFragment.class.getName();
     
     private Activity activity;
     
     private View view;
-    private ListView toDoTasksList;
+    private ListView dailyTasksList;
 //    private HabitsListAdapter habitsListAdapter;
     private EditText createHabitText;
     private Button createHabitSubmit;
@@ -40,7 +40,7 @@ public class ToDoTasksFragment extends Fragment implements OnClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_todo_tasks, container, false);
+        view = inflater.inflate(R.layout.fragment_rewards, container, false);
         
 //        initUI();
 
@@ -50,11 +50,11 @@ public class ToDoTasksFragment extends Fragment implements OnClickListener {
     }
 
     private void initUI() {
-//        habitText = (EditText) view.findViewById(R.id.text);
-//        createHabitSubmit = (Button) view.findViewById(R.id.submit);
-//        createHabitSubmit.setOnClickListener(this);
-//
-//        toDoTasksList = (ListView) view.findViewById(R.id.list_habits);
+        createHabitText = (EditText) view.findViewById(R.id.et_task_text);
+        createHabitSubmit = (Button) view.findViewById(R.id.btn_submit);
+        createHabitSubmit.setOnClickListener(this);
+        
+        dailyTasksList = (ListView) view.findViewById(R.id.lv_habits);
     }
     
 

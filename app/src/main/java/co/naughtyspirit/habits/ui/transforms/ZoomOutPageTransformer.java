@@ -1,4 +1,4 @@
-package co.naughtyspirit.habits.views.transforms;
+package co.naughtyspirit.habits.ui.transforms;
 
 import android.support.v4.view.ViewPager;
 import android.view.View;

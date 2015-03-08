@@ -8,14 +8,16 @@ import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import co.naughtyspirit.habits.auth.AuthProviderFactory;
 import co.naughtyspirit.habits.bus.BusProvider;
 import co.naughtyspirit.habits.bus.events.users.AuthFailureEvent;
 import co.naughtyspirit.habits.bus.events.users.CreateUserEvent;
 import co.naughtyspirit.habits.bus.events.users.LoginUserEvent;
-import co.naughtyspirit.habits.views.adapters.AuthScreenFragmentsAdapter;
-import co.naughtyspirit.habits.views.interfaces.OnViewPagerFragmentChange;
-import co.naughtyspirit.habits.views.transforms.ZoomOutPageTransformer;
+import co.naughtyspirit.habits.ui.adapters.AuthScreenFragmentsAdapter;
+import co.naughtyspirit.habits.ui.interfaces.OnViewPagerFragmentChange;
+import co.naughtyspirit.habits.ui.transforms.ZoomOutPageTransformer;
 
 /**
  * Created by Seishin <atanas@naughtyspirit.co>
@@ -26,23 +28,24 @@ import co.naughtyspirit.habits.views.transforms.ZoomOutPageTransformer;
 public class AuthActivity extends FragmentActivity implements OnViewPagerFragmentChange {
 
     private static final String TAG = AuthActivity.class.getName();
-    private ViewPager viewPager;
+
+    @InjectView(R.id.tasks_pager) ViewPager viewPager;
+
     private AuthScreenFragmentsAdapter viewPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
-
+        ButterKnife.inject(this);
         AuthProviderFactory.onCreate(this);
-    
+
         initUI();
     }
 
     private void initUI() {
         viewPagerAdapter = new AuthScreenFragmentsAdapter(getSupportFragmentManager());
         
-        viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
     }
@@ -80,14 +83,12 @@ public class AuthActivity extends FragmentActivity implements OnViewPagerFragmen
     @Override
     protected void onResume() {
         super.onResume();
-
         BusProvider.getInstance().register(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        
         BusProvider.getInstance().unregister(this);
     }
 

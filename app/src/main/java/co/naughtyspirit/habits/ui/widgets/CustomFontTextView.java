@@ -1,4 +1,4 @@
-package co.naughtyspirit.habits.views.widgets;
+package co.naughtyspirit.habits.ui.widgets;
 
 import android.content.Context;
 import android.util.AttributeSet;

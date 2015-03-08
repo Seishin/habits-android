@@ -1,4 +1,4 @@
-package co.naughtyspirit.habits.views.adapters;
+package co.naughtyspirit.habits.ui.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;

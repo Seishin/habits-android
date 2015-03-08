@@ -1,4 +1,4 @@
-package co.naughtyspirit.habits.views.adapters;
+package co.naughtyspirit.habits.ui.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -37,9 +37,9 @@ import co.naughtyspirit.habits.net.models.habit.Habit;
  */
 public class HabitsListAdapter extends BaseAdapter {
 
-    private final Context ctx;
-    private final ArrayList<Habit> habits = new ArrayList<>();
-    private final LayoutInflater inflater;
+    private Context ctx;
+    private ArrayList<Habit> habits = new ArrayList<>();
+    private LayoutInflater inflater;
 
     public HabitsListAdapter(Context ctx) {
         this.ctx = ctx;

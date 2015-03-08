@@ -14,8 +14,8 @@ import co.naughtyspirit.habits.auth.AuthProviderFactory;
 import co.naughtyspirit.habits.bus.BusProvider;
 import co.naughtyspirit.habits.bus.events.users.GetUserStatsEvent;
 import co.naughtyspirit.habits.bus.producers.UserEventsProducer;
-import co.naughtyspirit.habits.views.adapters.MainScreenFragmentsAdapter;
-import co.naughtyspirit.habits.views.transforms.ZoomOutPageTransformer;
+import co.naughtyspirit.habits.ui.adapters.MainScreenFragmentsAdapter;
+import co.naughtyspirit.habits.ui.transforms.ZoomOutPageTransformer;
 
 /**
  * * Created by Seishin <atanas@naughtyspirit.co>
@@ -43,8 +43,8 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
-
         AuthProviderFactory.onCreate(this);
+
         UserEventsProducer.produceGetUserStatsEvent(this);
         
         initUI();

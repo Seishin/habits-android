@@ -1,4 +1,4 @@
-package co.naughtyspirit.habits.views.interfaces;
+package co.naughtyspirit.habits.ui.interfaces;
 
 /**
  * * Created by Seishin <atanas@naughtyspirit.co>

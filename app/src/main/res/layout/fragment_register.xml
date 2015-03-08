@@ -89,14 +89,16 @@
             android:id="@+id/btn_submit"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/login_btn_height"
-            android:background="@color/bg_login"
+            android:background="@android:color/transparent"
             android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/password"
+            android:layout_marginTop="10dp"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:text="@string/btn_register"
             android:textAllCaps="true"
-            android:textColor="@color/white_F0"/>
+            android:textColor="@color/white_F0"
+            android:textSize="@dimen/font_size_normal"/>
      </RelativeLayout>
 
 </RelativeLayout>

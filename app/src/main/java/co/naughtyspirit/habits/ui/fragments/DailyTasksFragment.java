@@ -1,4 +1,4 @@
-package co.naughtyspirit.habits.views.fragments;
+package co.naughtyspirit.habits.ui.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -18,11 +18,12 @@ import butterknife.OnClick;
 import co.naughtyspirit.habits.R;
 import co.naughtyspirit.habits.auth.AuthProviderFactory;
 import co.naughtyspirit.habits.bus.BusProvider;
-import co.naughtyspirit.habits.bus.events.habits.HabitsFailureEvent;
-import co.naughtyspirit.habits.bus.producers.HabitEventsProducer;
-import co.naughtyspirit.habits.net.models.habit.Habit;
+import co.naughtyspirit.habits.bus.events.daily_tasks.DailyTasksFailureEvent;
+import co.naughtyspirit.habits.bus.producers.DailyTaskEventsProducer;
+import co.naughtyspirit.habits.net.models.daily_task.DailyTask;
+import co.naughtyspirit.habits.net.models.user.User;
 import co.naughtyspirit.habits.utils.WindowUtils;
-import co.naughtyspirit.habits.views.adapters.HabitsListAdapter;
+import co.naughtyspirit.habits.ui.adapters.DailyTasksListAdapter;
 
 /**
  * * Created by Seishin <atanas@naughtyspirit.co>
@@ -30,43 +31,44 @@ import co.naughtyspirit.habits.views.adapters.HabitsListAdapter;
  * *
  * * NaughtySpirit 2015
  */
-public class HabitsFragment extends Fragment {
+public class DailyTasksFragment extends BaseFragment {
 
-    private static final String TAG = HabitsFragment.class.getName();
+    private static final String TAG = DailyTasksFragment.class.getName();
     
     private Activity activity;
     
-    @InjectView(R.id.lv_habits) ListView habitsList;
-    @InjectView(R.id.et_habit_text) EditText habitText;
-
+    @InjectView(R.id.lv_tasks) ListView dailyTasksList;
+    @InjectView(R.id.et_task_text) EditText taskText;
+    
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_habits, container, false);
+        View view = inflater.inflate(R.layout.fragment_daily_tasks, container, false);
         ButterKnife.inject(this, view);
 
-        HabitEventsProducer.produceGetHabitsEvent(AuthProviderFactory.getProvider().getUser());
-
+        DailyTaskEventsProducer.produceGetTasksEvent(AuthProviderFactory.getProvider().getUser());
+        
         initUI();
-
+        
         return view;
     }
 
     private void initUI() {
-        habitsList.setAdapter(new HabitsListAdapter(activity));
+        dailyTasksList.setAdapter(new DailyTasksListAdapter(activity));
     }
+    
 
     @OnClick(R.id.btn_submit)
-    public void submitHabit() {
-        HabitEventsProducer.produceCreateHabitEvent(AuthProviderFactory.getProvider().getUser(),
-                new Habit(habitText.getText().toString()));
+    public void submitTask() {
+        User user = AuthProviderFactory.getProvider().getUser();
+        DailyTaskEventsProducer.produceCreateTaskEvent(user, new DailyTask(taskText.getText().toString()));
 
-        habitText.getText().clear();
-        WindowUtils.hideSoftKeyboard(activity, habitText);
+        taskText.getText().clear();
+        WindowUtils.hideSoftKeyboard(activity, taskText);
     }
-
+    
     @Subscribe
-    public void onHabitsFailure(HabitsFailureEvent event) {
-        habitText.setError(event.getMessage());
+    public void onTasksObtainFailure(DailyTasksFailureEvent event) {
+        taskText.setError(event.getMessage());
     }
 
     @Override
@@ -74,7 +76,7 @@ public class HabitsFragment extends Fragment {
         super.onAttach(activity);
         this.activity = activity;
     }
-
+    
     @Override
     public void onResume() {
         super.onResume();
