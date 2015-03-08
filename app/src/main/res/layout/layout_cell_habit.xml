@@ -33,10 +33,10 @@
         android:id="@+id/tv_habit_name"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textColor="@color/white_F0"
-        android:gravity="center_vertical"
+        android:layout_toLeftOf="@+id/rl_controls"
+        android:layout_centerVertical="true"
         android:paddingLeft="@dimen/cell_name_padding"
         android:paddingRight="@dimen/cell_name_padding"
-        android:layout_toLeftOf="@+id/rl_controls"/>
+        android:textColor="@color/white_F0"/>
     
 </RelativeLayout>
