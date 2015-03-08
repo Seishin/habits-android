@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/rl_cell_habit"
+    android:id="@+id/rl_task_cell"
     android:layout_width="match_parent" 
     android:layout_height="wrap_content"
     android:minHeight="@dimen/cell_min_height">
@@ -11,28 +11,25 @@
         android:layout_height="@dimen/cell_controls_height"
         android:layout_alignParentRight="true">
         <Button
-            android:id="@+id/btn_delete_habit"
+            android:id="@+id/btn_delete_task"
             android:layout_width="@dimen/cell_btn_delete_width"
             android:layout_height="@dimen/cell_btn_delete_height"
-            android:layout_toLeftOf="@+id/btn_increment_habit"
+            android:layout_toLeftOf="@+id/cb_check_task"
             android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/cell_btn_delete_margin_right"
             android:background="@drawable/ic_trash"/>
 
-        <Button
-            android:id="@+id/btn_increment_habit"
-            android:layout_width="@dimen/cell_btn_inc_habit_size"
-            android:layout_height="@dimen/cell_btn_inc_habit_size"
-            android:layout_alignParentRight="true"
-            android:background="@android:color/transparent"
-            android:text="@string/plus_sign"
-            android:textSize="@dimen/font_size_large"
-            android:textColor="@color/black_B4"/>
-    </RelativeLayout>
-
+        <CheckBox
+            android:id="@+id/cb_check_task"
+            android:layout_width="@dimen/cell_cb_check_task_size"
+            android:layout_height="@dimen/cell_cb_check_task_size"
+            android:layout_alignParentRight="true"/>
+        </RelativeLayout>
+    
     <TextView
-        android:id="@+id/tv_habit_name"
+        android:id="@+id/tv_task_name"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="match_parent" 
         android:textColor="@color/white_F0"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/cell_name_padding"

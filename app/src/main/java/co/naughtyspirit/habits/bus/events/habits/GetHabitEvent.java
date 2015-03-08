@@ -4,15 +4,14 @@ import co.naughtyspirit.habits.net.models.habit.Habit;
 
 /**
  * * Created by Seishin <atanas@naughtyspirit.co>
- * * on 3/1/15.
+ * * on 3/8/15.
  * *
  * * NaughtySpirit 2015
  */
-public class IncrementHabitEvent {
+public class GetHabitEvent {
+    private Habit habit;
 
-    private final Habit habit;
-
-    public IncrementHabitEvent(Habit habit) {
+    public GetHabitEvent(Habit habit) {
         this.habit = habit;
     }
 

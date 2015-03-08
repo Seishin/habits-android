@@ -1,6 +1,6 @@
 package co.naughtyspirit.habits.bus.events.habits;
 
-import co.naughtyspirit.habits.net.models.Habit;
+import co.naughtyspirit.habits.net.models.habit.Habit;
 
 /**
  * * Created by Seishin <atanas@naughtyspirit.co>

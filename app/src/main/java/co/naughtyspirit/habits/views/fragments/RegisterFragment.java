@@ -13,10 +13,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import co.naughtyspirit.habits.R;
-import co.naughtyspirit.habits.auth.AuthProviderFactory;
 import co.naughtyspirit.habits.auth.DefaultAuthProvider;
 import co.naughtyspirit.habits.bus.producers.UserEventsProducer;
-import co.naughtyspirit.habits.net.models.User;
+import co.naughtyspirit.habits.net.models.user.User;
 import co.naughtyspirit.habits.views.interfaces.OnViewPagerFragmentChange;
 
 /**
@@ -57,14 +56,14 @@ public class RegisterFragment extends Fragment implements OnClickListener{
         email = (EditText) view.findViewById(R.id.email);
         password = (EditText) view.findViewById(R.id.password);
         
-        submit = (Button) view.findViewById(R.id.submit);
+        submit = (Button) view.findViewById(R.id.btn_submit);
         submit.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.submit:
+            case R.id.btn_submit:
                 User user = new User();
                 user.setEmail(email.getText().toString());
                 user.setPassword(password.getText().toString());

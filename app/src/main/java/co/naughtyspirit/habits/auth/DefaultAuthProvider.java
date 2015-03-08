@@ -2,7 +2,7 @@ package co.naughtyspirit.habits.auth;
 
 import android.content.Context;
 
-import co.naughtyspirit.habits.net.models.User;
+import co.naughtyspirit.habits.net.models.user.User;
 import co.naughtyspirit.habits.utils.Constants;
 import co.naughtyspirit.habits.utils.SharedPreferencesUtil;
 

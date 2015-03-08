@@ -50,7 +50,7 @@ public class ToDoTasksFragment extends Fragment implements OnClickListener {
     }
 
     private void initUI() {
-//        createHabitText = (EditText) view.findViewById(R.id.text);
+//        habitText = (EditText) view.findViewById(R.id.text);
 //        createHabitSubmit = (Button) view.findViewById(R.id.submit);
 //        createHabitSubmit.setOnClickListener(this);
 //
@@ -61,7 +61,7 @@ public class ToDoTasksFragment extends Fragment implements OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.submit:
+            case R.id.btn_submit:
                 
                 break;
         }

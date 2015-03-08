@@ -1,6 +1,6 @@
 package co.naughtyspirit.habits.bus.events.users;
 
-import co.naughtyspirit.habits.net.models.UserStats;
+import co.naughtyspirit.habits.net.models.user.UserStats;
 
 /**
  * * Created by Seishin <atanas@naughtyspirit.co>

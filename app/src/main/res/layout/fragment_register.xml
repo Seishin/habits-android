@@ -86,7 +86,7 @@
             android:layout_below="@id/password"/>
 
         <Button
-            android:id="@+id/submit"
+            android:id="@+id/btn_submit"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/login_btn_height"
             android:background="@color/bg_login"

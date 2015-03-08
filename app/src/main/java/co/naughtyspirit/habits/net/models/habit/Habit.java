@@ -1,6 +1,4 @@
-package co.naughtyspirit.habits.net.models;
-
-import android.text.TextUtils;
+package co.naughtyspirit.habits.net.models.habit;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -36,12 +34,12 @@ public class Habit {
         this.id = id;
     }
 
-    public int getState() {
-        if (TextUtils.isEmpty(state)) {
-            return 0;
-        } else {
-            return Integer.valueOf(state);
-        }
+    public String getState() {
+        return state;
+    }
+
+    public int getStateAsInt() {
+        return Integer.valueOf(state);
     }
 
     public void setState(String state) {

@@ -6,25 +6,22 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
 import co.naughtyspirit.habits.R;
 import co.naughtyspirit.habits.auth.AuthProviderFactory;
 import co.naughtyspirit.habits.bus.BusProvider;
-import co.naughtyspirit.habits.bus.events.habits.CreateHabitEvent;
-import co.naughtyspirit.habits.bus.events.habits.GetHabitsEvent;
 import co.naughtyspirit.habits.bus.events.habits.HabitsFailureEvent;
-import co.naughtyspirit.habits.bus.events.habits.IncrementHabitEvent;
 import co.naughtyspirit.habits.bus.producers.HabitEventsProducer;
-import co.naughtyspirit.habits.bus.producers.UserEventsProducer;
-import co.naughtyspirit.habits.net.models.Habit;
+import co.naughtyspirit.habits.net.models.habit.Habit;
+import co.naughtyspirit.habits.utils.WindowUtils;
 import co.naughtyspirit.habits.views.adapters.HabitsListAdapter;
 
 /**
@@ -33,95 +30,60 @@ import co.naughtyspirit.habits.views.adapters.HabitsListAdapter;
  * *
  * * NaughtySpirit 2015
  */
-public class HabitsFragment extends Fragment implements OnClickListener {
+public class HabitsFragment extends Fragment {
 
     private static final String TAG = HabitsFragment.class.getName();
     
     private Activity activity;
     
-    private View view;
-    private ListView habitsList;
-    private HabitsListAdapter habitsListAdapter;
-    private EditText createHabitText;
-    private Button createHabitSubmit;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    @InjectView(R.id.lv_habits) ListView habitsList;
+    @InjectView(R.id.et_habit_text) EditText habitText;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_habits, container, false);
-        
-        initUI();
+        View view = inflater.inflate(R.layout.fragment_habits, container, false);
+        ButterKnife.inject(this, view);
 
         HabitEventsProducer.produceGetHabitsEvent(AuthProviderFactory.getProvider().getUser());
-        
+
+        initUI();
+
         return view;
     }
 
     private void initUI() {
-        createHabitText = (EditText) view.findViewById(R.id.text);
-        createHabitText.clearFocus();
-        
-        createHabitSubmit = (Button) view.findViewById(R.id.submit);
-        createHabitSubmit.setOnClickListener(this);
-        
-        habitsList = (ListView) view.findViewById(R.id.list_habits);
-        habitsListAdapter = new HabitsListAdapter(activity);
-        habitsList.setAdapter(habitsListAdapter);
+        habitsList.setAdapter(new HabitsListAdapter(activity));
     }
-    
-    @Subscribe
-    public void onHabitsObtainSuccess(GetHabitsEvent event) {
-        habitsListAdapter.addItems(event.getList().getHabits());
+
+    @OnClick(R.id.btn_submit)
+    public void submitHabit() {
+        HabitEventsProducer.produceCreateHabitEvent(AuthProviderFactory.getProvider().getUser(),
+                new Habit(habitText.getText().toString()));
+
+        habitText.getText().clear();
+        WindowUtils.hideSoftKeyboard(activity, habitText);
     }
 
     @Subscribe
     public void onHabitsFailure(HabitsFailureEvent event) {
-        Toast.makeText(activity, event.getMessage(), Toast.LENGTH_LONG).show();
-    }
-    
-    @Subscribe
-    public void onCreateHabitSuccess(CreateHabitEvent event) {
-        habitsListAdapter.addItem(event.getHabit());
-    }
-    
-    @Subscribe
-    public void onIncrementHabitSuccess(IncrementHabitEvent event) {
-        habitsListAdapter.updateItem(event.getHabit());
-        UserEventsProducer.produceGetUserStatsEvent(activity);
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.submit:
-                HabitEventsProducer.produceCreateHabitEvent(AuthProviderFactory.getProvider().getUser(), 
-                        new Habit(createHabitText.getText().toString()));
-                break;
-        }
+        habitText.setError(event.getMessage());
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        
         this.activity = activity;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
         BusProvider.getInstance().register(this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        
         BusProvider.getInstance().unregister(this);
     }
 }

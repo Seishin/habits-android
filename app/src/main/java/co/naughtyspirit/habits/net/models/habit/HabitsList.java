@@ -1,4 +1,4 @@
-package co.naughtyspirit.habits.net.models;
+package co.naughtyspirit.habits.net.models.habit;
 
 import java.util.ArrayList;
 

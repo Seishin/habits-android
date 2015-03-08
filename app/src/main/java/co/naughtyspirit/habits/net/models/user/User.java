@@ -1,4 +1,4 @@
-package co.naughtyspirit.habits.net.models;
+package co.naughtyspirit.habits.net.models.user;
 
 import com.google.gson.annotations.SerializedName;
 

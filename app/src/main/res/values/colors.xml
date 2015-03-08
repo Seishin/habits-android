@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="white_69">#69FFFFFF</color>
     <color name="white_F0">#F0FFFFFF</color>
+    <color name="white_B4">#B4FFFFFF</color>
+    <color name="white_69">#69FFFFFF</color>
+    <color name="black_B4">#B4000000</color>
+    <color name="black_30">#30000000</color>
+
     <color name="bg_login">#69ce9c3d</color>
+
+    <color name="header_text">#B4f3a602</color>
     
     <color name="bg_weak">#30ffea00</color>
     <color name="bg_medium">#305ec800</color>
