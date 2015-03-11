@@ -20,7 +20,7 @@
             android:layout_height="50dp">
             
             <EditText
-                android:id="@+id/et_task_text"
+                android:id="@+id/et_todo_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_toLeftOf="@+id/btn_submit"/>

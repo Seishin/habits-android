@@ -50,7 +50,7 @@ public class RewardsFragment extends Fragment implements OnClickListener {
     }
 
     private void initUI() {
-        createHabitText = (EditText) view.findViewById(R.id.et_task_text);
+        createHabitText = (EditText) view.findViewById(R.id.et_todo_text);
         createHabitSubmit = (Button) view.findViewById(R.id.btn_submit);
         createHabitSubmit.setOnClickListener(this);
         

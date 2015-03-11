@@ -5,6 +5,8 @@ import co.naughtyspirit.habits.net.models.daily_task.DailyTask;
 import co.naughtyspirit.habits.net.models.daily_task.DailyTasksList;
 import co.naughtyspirit.habits.net.models.habit.Habit;
 import co.naughtyspirit.habits.net.models.habit.HabitsList;
+import co.naughtyspirit.habits.net.models.todo.ToDo;
+import co.naughtyspirit.habits.net.models.todo.ToDosList;
 import co.naughtyspirit.habits.net.models.user.User;
 import co.naughtyspirit.habits.net.models.user.UserStats;
 import retrofit.Callback;
@@ -73,24 +75,49 @@ public interface HabitsApi {
     /**
      *  Daily Task APIs
      */
-    @GET("/daily-task/{taskId}/")
+    @GET("/daily-tasks/{taskId}/")
     void getDailyTask(@Header("Authorization") String token, @Path("taskId") String taskId, @Query("userId") String userId, @Query("date") String date, Callback<DailyTask> cb);
 
-    @GET("/daily-task/all/")
+    @GET("/daily-tasks/all/")
     void getAllDailyTasks(@Header("Authorization") String token, @Query("userId") String userId, @Query("date") String date, Callback<DailyTasksList> cb);
 
-    @POST("/daily-task/")
+    @POST("/daily-tasks/")
     void createDailyTask(@Header("Authorization") String token, @Query("userId") String userId, @Body DailyTask task, Callback<DailyTask> cb);
 
-    @POST("/daily-task/{taskId}/check/")
+    @POST("/daily-tasks/{taskId}/check/")
     void checkDailyTask(@Header("Authorization") String token, @Query("userId") String userId, @Query("date") String date, @Path("taskId") String taskId, Callback<DailyTask> cb);
 
-    @POST("/daily-task/{taskId}/uncheck/")
+    @POST("/daily-tasks/{taskId}/uncheck/")
     void uncheckDailyTask(@Header("Authorization") String token, @Query("userId") String userId, @Query("date") String date, @Path("taskId") String taskId, Callback<DailyTask> cb);
 
-    @PUT("/daily-task/{taskId}/")
+    @PUT("/daily-tasks/{taskId}/")
     void updateDailyTask(@Header("Authorization") String token, @Query("userId") String userId, @Query("date") String date, @Path("taskId") String taskId, Callback<DailyTask> cb);
     
-    @DELETE("/daily-task/{taskId}/")
+    @DELETE("/daily-tasks/{taskId}/")
     void deleteDailyTask(@Header("Authorization") String token, @Query("userId") String userId, @Path("taskId") String taskId, Callback<DeletedItem> cb);
+
+    /**
+     *  To Do Task APIs
+     */
+    @GET("/todos/{todoId}/")
+    void getToDo(@Header("Authorization") String token, @Path("todoId") String todoId, @Query("userId") String userId, Callback<ToDo> cb);
+
+    @GET("/todos/all/")
+    void getAllToDos(@Header("Authorization") String token, @Query("userId") String userId, Callback<ToDosList> cb);
+
+    @POST("/todos/")
+    void createToDo(@Header("Authorization") String token, @Query("userId") String userId, @Body ToDo todo, Callback<ToDo> cb);
+
+    @POST("/todos/{todoId}/check/")
+    void checkToDo(@Header("Authorization") String token, @Query("userId") String userId, @Path("todoId") String todoId, Callback<ToDo> cb);
+
+    @POST("/todos/{todoId}/uncheck/")
+    void uncheckToDo(@Header("Authorization") String token, @Query("userId") String userId, @Path("todoId") String todoId, Callback<ToDo> cb);
+
+    @PUT("/todos/{todoId}/")
+    void updateToDo(@Header("Authorization") String token, @Query("userId") String userId, @Path("todoId") String todoId, Callback<ToDo> cb);
+
+    @DELETE("/todos/{todoId}/")
+    void deleteToDo(@Header("Authorization") String token, @Query("userId") String userId, @Path("todoId") String todoId, Callback<DeletedItem> cb);
+
 }

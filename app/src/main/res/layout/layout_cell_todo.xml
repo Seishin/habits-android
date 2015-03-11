@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/rl_daily_task_cell"
+    android:id="@+id/rl_todo_cell"
     android:layout_width="match_parent" 
     android:layout_height="wrap_content"
     android:minHeight="@dimen/cell_min_height">
@@ -11,23 +11,23 @@
         android:layout_height="@dimen/cell_controls_height"
         android:layout_alignParentRight="true">
         <Button
-            android:id="@+id/btn_delete_task"
+            android:id="@+id/btn_delete_todo"
             android:layout_width="@dimen/cell_btn_delete_width"
             android:layout_height="@dimen/cell_btn_delete_height"
-            android:layout_toLeftOf="@+id/cb_check_task"
+            android:layout_toLeftOf="@+id/cb_check_todo"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/cell_btn_delete_margin_right"
             android:background="@drawable/ic_trash"/>
 
         <CheckBox
-            android:id="@+id/cb_check_task"
+            android:id="@+id/cb_check_todo"
             android:layout_width="@dimen/cell_cb_check_task_size"
             android:layout_height="@dimen/cell_cb_check_task_size"
             android:layout_alignParentRight="true"/>
         </RelativeLayout>
     
     <TextView
-        android:id="@+id/tv_task_name"
+        android:id="@+id/tv_todo_name"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_toLeftOf="@+id/rl_controls"

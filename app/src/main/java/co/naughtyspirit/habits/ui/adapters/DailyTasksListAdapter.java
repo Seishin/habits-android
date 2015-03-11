@@ -169,7 +169,7 @@ public class DailyTasksListAdapter extends BaseAdapter {
     }
     
     static class ViewHolder {
-        @InjectView(R.id.rl_task_cell) RelativeLayout taskCell;
+        @InjectView(R.id.rl_daily_task_cell) RelativeLayout taskCell;
         @InjectView(R.id.tv_task_name) TextView taskName;
         @InjectView(R.id.btn_delete_task) Button taskDelete;
         @InjectView(R.id.cb_check_task) CheckBox taskCheck;
@@ -190,7 +190,7 @@ public class DailyTasksListAdapter extends BaseAdapter {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.cb_check_task:
+                case R.id.cb_check_todo:
                     if (task.getStateAsBoolean()) {
                         DailyTaskEventsProducer.produceUnCheckTaskEvent(AuthProviderFactory.getProvider().getUser(), task);
                     } else {
@@ -198,7 +198,7 @@ public class DailyTasksListAdapter extends BaseAdapter {
                     }
                     break;
 
-                case R.id.btn_delete_task:
+                case R.id.btn_delete_todo:
                     DailyTaskEventsProducer.produceDeleteTaskEvent(AuthProviderFactory.getProvider().getUser(), task);
                     break;
             }

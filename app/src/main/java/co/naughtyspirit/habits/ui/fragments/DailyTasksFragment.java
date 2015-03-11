@@ -3,7 +3,6 @@ package co.naughtyspirit.habits.ui.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,8 +36,8 @@ public class DailyTasksFragment extends BaseFragment {
     
     private Activity activity;
     
-    @InjectView(R.id.lv_tasks) ListView dailyTasksList;
-    @InjectView(R.id.et_task_text) EditText taskText;
+    @InjectView(R.id.lv_todos) ListView dailyTasksList;
+    @InjectView(R.id.et_todo_text) EditText taskText;
     
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

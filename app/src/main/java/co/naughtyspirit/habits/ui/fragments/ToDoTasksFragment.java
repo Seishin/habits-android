@@ -6,14 +6,28 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.squareup.otto.Subscribe;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
 import co.naughtyspirit.habits.R;
+import co.naughtyspirit.habits.auth.AuthProviderFactory;
 import co.naughtyspirit.habits.bus.BusProvider;
+import co.naughtyspirit.habits.bus.events.daily_tasks.DailyTasksFailureEvent;
+import co.naughtyspirit.habits.bus.events.todos.ToDoFailureEvent;
+import co.naughtyspirit.habits.bus.producers.DailyTaskEventsProducer;
+import co.naughtyspirit.habits.bus.producers.ToDoEventsProducer;
+import co.naughtyspirit.habits.net.models.daily_task.DailyTask;
+import co.naughtyspirit.habits.net.models.todo.ToDo;
+import co.naughtyspirit.habits.net.models.user.User;
+import co.naughtyspirit.habits.ui.adapters.DailyTasksListAdapter;
+import co.naughtyspirit.habits.ui.adapters.ToDosListAdapter;
+import co.naughtyspirit.habits.utils.WindowUtils;
 
 /**
  * * Created by Seishin <atanas@naughtyspirit.co>
@@ -21,70 +35,61 @@ import co.naughtyspirit.habits.bus.BusProvider;
  * *
  * * NaughtySpirit 2015
  */
-public class ToDoTasksFragment extends Fragment implements OnClickListener {
+public class ToDoTasksFragment extends Fragment {
 
     private static final String TAG = ToDoTasksFragment.class.getName();
-    
-    private Activity activity;
-    
-    private View view;
-    private ListView toDoTasksList;
-//    private HabitsListAdapter habitsListAdapter;
-    private EditText createHabitText;
-    private Button createHabitSubmit;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    private Activity activity;
+
+    @InjectView(R.id.lv_todos) ListView todosList;
+    @InjectView(R.id.et_todo_text) EditText todoText;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_todo_tasks, container, false);
-        
-//        initUI();
+        View view = inflater.inflate(R.layout.fragment_todo_tasks, container, false);
+        ButterKnife.inject(this, view);
 
-//        HabitEventsProducer.produceGetHabitsEvent(AuthProviderFactory.getProvider().getUser());
-        
+        ToDoEventsProducer.produceGetToDosEvent(AuthProviderFactory.getProvider().getUser());
+
+        initUI();
+
         return view;
     }
 
     private void initUI() {
-//        habitText = (EditText) view.findViewById(R.id.text);
-//        createHabitSubmit = (Button) view.findViewById(R.id.submit);
-//        createHabitSubmit.setOnClickListener(this);
-//
-//        toDoTasksList = (ListView) view.findViewById(R.id.list_habits);
+        todosList.setAdapter(new ToDosListAdapter(activity));
     }
-    
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_submit:
-                
-                break;
-        }
+
+    @OnClick(R.id.btn_submit)
+    public void submitTask() {
+        User user = AuthProviderFactory.getProvider().getUser();
+        ToDoEventsProducer.produceCreateToDoEvent(user, new ToDo(todoText.getText().toString()));
+
+        todoText.getText().clear();
+        WindowUtils.hideSoftKeyboard(activity, todoText);
+    }
+
+    @Subscribe
+    public void onToDosObtainFailure(ToDoFailureEvent event) {
+        todoText.setError(event.getMessage());
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        
         this.activity = activity;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
         BusProvider.getInstance().register(this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        
         BusProvider.getInstance().unregister(this);
     }
 }

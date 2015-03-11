@@ -29,7 +29,7 @@ public class AuthActivity extends FragmentActivity implements OnViewPagerFragmen
 
     private static final String TAG = AuthActivity.class.getName();
 
-    @InjectView(R.id.tasks_pager) ViewPager viewPager;
+    @InjectView(R.id.pager) ViewPager viewPager;
 
     private AuthScreenFragmentsAdapter viewPagerAdapter;
 

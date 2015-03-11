@@ -34,7 +34,7 @@
             android:background="@color/black_30">
 
             <EditText
-                android:id="@+id/et_task_text"
+                android:id="@+id/et_todo_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_toLeftOf="@+id/btn_submit"
@@ -58,7 +58,7 @@
         </RelativeLayout>
         
         <ListView
-            android:id="@+id/lv_tasks"
+            android:id="@+id/lv_todos"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/rl_create"
