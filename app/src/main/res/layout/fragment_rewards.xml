@@ -1,42 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" 
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="15dp">
+    android:padding="@dimen/fragment_padding">
 
     <RelativeLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" 
+        android:layout_height="match_parent"
         android:background="@drawable/bg_task"
-        android:paddingLeft="32dp"
-        android:paddingRight="30dp"
-        android:paddingBottom="20dp"
-        android:paddingTop="8dp">
-        
+        android:paddingLeft="@dimen/fragment_container_padding_left"
+        android:paddingRight="@dimen/fragment_container_padding_right"
+        android:paddingBottom="@dimen/fragment_container_padding_bottom"
+        android:paddingTop="@dimen/fragment_container_padding_top">
+
+        <TextView
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/fragment_header_margin_top"
+            android:layout_marginLeft="@dimen/fragment_header_margin_left"
+            android:text="@string/header_rewards"
+            android:textColor="@color/header_text"
+            android:textSize="@dimen/font_size_header"/>
+
         <RelativeLayout
             android:id="@+id/rl_create"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
-            
+            android:layout_height="@dimen/fragment_et_create_height"
+            android:layout_below="@+id/header"
+            android:layout_marginRight="@dimen/fragment_et_create_margin_right"
+            android:paddingLeft="@dimen/fragment_et_create_padding_left"
+            android:background="@color/black_30">
+
             <EditText
-                android:id="@+id/et_todo_text"
+                android:id="@+id/et_reward_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_toLeftOf="@+id/btn_submit"/>
-            
-            <Button
-                android:id="@+id/btn_submit"
+                android:layout_toLeftOf="@+id/et_reward_price"
+                android:hint="@string/hint_reward"
+                android:textColorHint="@color/white_69"
+                android:textColor="@color/white_B4"
+                android:textSize="@dimen/font_size_normal"
+                android:background="@android:color/transparent"
+                android:gravity="center_vertical"/>
+
+            <EditText
+                android:id="@+id/et_reward_price"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:layout_alignParentRight="true"/>
-            </RelativeLayout>
-        
+                android:layout_toLeftOf="@+id/btn_submit"
+                android:hint="@string/hint_reward_price"
+                android:textColorHint="@color/white_69"
+                android:textColor="@color/white_B4"
+                android:textSize="@dimen/font_size_normal"
+                android:background="@android:color/transparent"
+                android:gravity="center"/>
+
+            <Button
+                android:id="@+id/btn_submit"
+                android:layout_width="@dimen/fragment_btn_submit_width"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:background="@android:color/transparent"
+                android:text="@string/plus_sign"
+                android:textSize="@dimen/font_size_large"
+                android:gravity="center"
+                android:textColor="@android:color/white"/>
+        </RelativeLayout>
+
         <ListView
-            android:id="@+id/lv_habits"
+            android:id="@+id/lv_rewards"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/rl_create"/>
-        
-        </RelativeLayout>
+            android:layout_below="@+id/rl_create"
+            android:layout_marginLeft="@dimen/fragment_lv_padding"
+            android:layout_marginRight="@dimen/fragment_lv_padding"/>
+    </RelativeLayout>
 </RelativeLayout>

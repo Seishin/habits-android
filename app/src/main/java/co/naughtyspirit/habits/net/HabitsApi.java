@@ -5,6 +5,8 @@ import co.naughtyspirit.habits.net.models.daily_task.DailyTask;
 import co.naughtyspirit.habits.net.models.daily_task.DailyTasksList;
 import co.naughtyspirit.habits.net.models.habit.Habit;
 import co.naughtyspirit.habits.net.models.habit.HabitsList;
+import co.naughtyspirit.habits.net.models.reward.Reward;
+import co.naughtyspirit.habits.net.models.reward.RewardsList;
 import co.naughtyspirit.habits.net.models.todo.ToDo;
 import co.naughtyspirit.habits.net.models.todo.ToDosList;
 import co.naughtyspirit.habits.net.models.user.User;
@@ -119,5 +121,26 @@ public interface HabitsApi {
 
     @DELETE("/todos/{todoId}/")
     void deleteToDo(@Header("Authorization") String token, @Query("userId") String userId, @Path("todoId") String todoId, Callback<DeletedItem> cb);
+
+    /**
+     *  Reward APIs
+     */
+    @GET("/rewards/{rewardId}")
+    void getReward(@Header("Authorization") String token, @Path("rewardId") String rewardId, @Query("userId") String userId, Callback<Reward> cb);
+
+    @GET("/rewards/all/")
+    void getRewards(@Header("Authorization") String token, @Query("userId") String userId, Callback<RewardsList> cb);
+
+    @POST("/rewards/")
+    void createReward(@Header("Authorization") String token, @Query("userId") String userId, @Body Reward reward, Callback<Reward> cb);
+
+    @POST("/rewards/buy/{rewardId}/")
+    void buyReward(@Header("Authorization") String token, @Query("userId") String userId, @Path("rewardId") String rewardId, Callback<Reward> cb);
+
+    @PUT("/rewards/{rewardId}/")
+    void updateReward(@Header("Authorization") String token, @Query("userId") String userId, @Path("rewardId") String rewardId, Callback<Reward> cb);
+
+    @DELETE("/rewards/{rewardId}/")
+    void deleteReward(@Header("Authorization") String token, @Query("userId") String userId, @Path("rewardId") String rewardId, Callback<DeletedItem> cb);
 
 }

@@ -1,0 +1,21 @@
+package co.naughtyspirit.habits.bus.events.todo;
+
+import co.naughtyspirit.habits.net.models.todo.ToDo;
+
+/**
+ * * Created by Seishin <atanas@naughtyspirit.co>
+ * * on 3/7/15.
+ * *
+ * * NaughtySpirit 2015
+ */
+public class UpdateToDoEvent {
+    private ToDo todo;
+
+    public UpdateToDoEvent(ToDo todo) {
+        this.todo = todo;
+    }
+
+    public ToDo getToDo() {
+        return todo;
+    }
+}

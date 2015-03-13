@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_reward_cell"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/cell_min_height">
+
+    <RelativeLayout
+        android:id="@+id/rl_controls"
+        android:layout_width="65dp"
+        android:layout_height="@dimen/cell_controls_height"
+        android:layout_alignParentRight="true">
+        <Button
+            android:id="@+id/btn_delete_reward"
+            android:layout_width="@dimen/cell_btn_delete_width"
+            android:layout_height="@dimen/cell_btn_delete_height"
+            android:layout_toLeftOf="@+id/btn_buy_reward"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/cell_btn_delete_margin_right"
+            android:background="@drawable/ic_trash"/>
+
+        <Button
+            android:id="@+id/btn_buy_reward"
+            android:layout_width="40dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:textSize="@dimen/font_size_normal"
+            android:textColor="@android:color/white"
+            android:gravity="center"
+            android:background="@android:color/transparent"
+            android:drawableLeft="@drawable/coin_small"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_reward_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toLeftOf="@+id/rl_controls"
+        android:layout_centerVertical="true"
+        android:paddingLeft="@dimen/cell_name_padding"
+        android:paddingRight="@dimen/cell_name_padding"
+        android:textColor="@color/white_F0"/>
+
+</RelativeLayout>

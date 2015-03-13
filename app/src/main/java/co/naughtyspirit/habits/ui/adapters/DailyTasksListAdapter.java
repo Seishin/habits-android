@@ -19,12 +19,12 @@ import butterknife.InjectView;
 import co.naughtyspirit.habits.R;
 import co.naughtyspirit.habits.auth.AuthProviderFactory;
 import co.naughtyspirit.habits.bus.BusProvider;
-import co.naughtyspirit.habits.bus.events.daily_tasks.CheckDailyTaskEvent;
-import co.naughtyspirit.habits.bus.events.daily_tasks.CreateDailyTaskEvent;
-import co.naughtyspirit.habits.bus.events.daily_tasks.DeleteDailyTaskEvent;
-import co.naughtyspirit.habits.bus.events.daily_tasks.GetDailyTasksEvent;
-import co.naughtyspirit.habits.bus.events.daily_tasks.UncheckDailyTaskEvent;
-import co.naughtyspirit.habits.bus.events.daily_tasks.UpdateDailyTaskEvent;
+import co.naughtyspirit.habits.bus.events.daily_task.CheckDailyTaskEvent;
+import co.naughtyspirit.habits.bus.events.daily_task.CreateDailyTaskEvent;
+import co.naughtyspirit.habits.bus.events.daily_task.DeleteDailyTaskEvent;
+import co.naughtyspirit.habits.bus.events.daily_task.GetDailyTasksEvent;
+import co.naughtyspirit.habits.bus.events.daily_task.UncheckDailyTaskEvent;
+import co.naughtyspirit.habits.bus.events.daily_task.UpdateDailyTaskEvent;
 import co.naughtyspirit.habits.bus.producers.DailyTaskEventsProducer;
 import co.naughtyspirit.habits.bus.producers.UserEventsProducer;
 import co.naughtyspirit.habits.net.models.DeletedItem;
@@ -190,7 +190,7 @@ public class DailyTasksListAdapter extends BaseAdapter {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.cb_check_todo:
+                case R.id.cb_check_task:
                     if (task.getStateAsBoolean()) {
                         DailyTaskEventsProducer.produceUnCheckTaskEvent(AuthProviderFactory.getProvider().getUser(), task);
                     } else {
@@ -198,7 +198,7 @@ public class DailyTasksListAdapter extends BaseAdapter {
                     }
                     break;
 
-                case R.id.btn_delete_todo:
+                case R.id.btn_delete_task:
                     DailyTaskEventsProducer.produceDeleteTaskEvent(AuthProviderFactory.getProvider().getUser(), task);
                     break;
             }

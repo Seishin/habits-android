@@ -17,7 +17,7 @@ import butterknife.OnClick;
 import co.naughtyspirit.habits.R;
 import co.naughtyspirit.habits.auth.AuthProviderFactory;
 import co.naughtyspirit.habits.bus.BusProvider;
-import co.naughtyspirit.habits.bus.events.habits.HabitsFailureEvent;
+import co.naughtyspirit.habits.bus.events.habit.HabitsFailureEvent;
 import co.naughtyspirit.habits.bus.producers.HabitEventsProducer;
 import co.naughtyspirit.habits.net.models.habit.Habit;
 import co.naughtyspirit.habits.ui.adapters.HabitsListAdapter;

@@ -12,7 +12,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import co.naughtyspirit.habits.auth.AuthProviderFactory;
 import co.naughtyspirit.habits.bus.BusProvider;
-import co.naughtyspirit.habits.bus.events.users.GetUserStatsEvent;
+import co.naughtyspirit.habits.bus.events.user.GetUserStatsEvent;
 import co.naughtyspirit.habits.bus.producers.UserEventsProducer;
 import co.naughtyspirit.habits.ui.adapters.MainScreenFragmentsAdapter;
 import co.naughtyspirit.habits.ui.transforms.ZoomOutPageTransformer;

@@ -10,7 +10,10 @@
     <string name="header_habits">Habits</string>
     <string name="header_daily_tasks">Daily Tasks</string>
     <string name="header_todos">To Dos</string>
+    <string name="header_rewards">Rewards</string>
     <string name="hint_habit">New Habit...</string>
     <string name="hint_daily_task">New Daily Task...</string>
     <string name="hint_todo">New To Do...</string>
+    <string name="hint_reward">New reward...</string>
+    <string name="hint_reward_price">Price</string>
 </resources>
