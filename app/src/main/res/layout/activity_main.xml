@@ -12,7 +12,7 @@
         android:padding="5dp">
         
         <Button
-            android:id="@+id/player"
+            android:id="@+id/profile"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:background="@drawable/ic_player"
@@ -34,10 +34,10 @@
             android:textColor="@android:color/white"/>
 
         <Button
-            android:id="@+id/settings"
+            android:id="@+id/logout"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:background="@drawable/ic_settings"
+            android:background="@drawable/ic_logout"
             android:layout_alignParentRight="true"
             />
         
@@ -135,4 +135,9 @@
             android:textColor="@android:color/white"
             android:textStyle="bold"/>
      </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/fr_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </RelativeLayout>

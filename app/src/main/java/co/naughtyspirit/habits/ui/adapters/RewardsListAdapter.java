@@ -1,6 +1,7 @@
 package co.naughtyspirit.habits.ui.adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,15 +18,16 @@ import butterknife.InjectView;
 import co.naughtyspirit.habits.R;
 import co.naughtyspirit.habits.auth.AuthProviderFactory;
 import co.naughtyspirit.habits.bus.BusProvider;
-import co.naughtyspirit.habits.bus.events.reward.BuyRewardEvent;
-import co.naughtyspirit.habits.bus.events.reward.CreateRewardEvent;
-import co.naughtyspirit.habits.bus.events.reward.DeleteRewardEvent;
-import co.naughtyspirit.habits.bus.events.reward.GetRewardsEvent;
-import co.naughtyspirit.habits.bus.events.reward.UpdateRewardEvent;
-import co.naughtyspirit.habits.bus.producers.RewardEventsProducer;
-import co.naughtyspirit.habits.bus.producers.UserEventsProducer;
+import co.naughtyspirit.habits.bus.events.net.reward.BuyRewardEvent;
+import co.naughtyspirit.habits.bus.events.net.reward.CreateRewardEvent;
+import co.naughtyspirit.habits.bus.events.net.reward.DeleteRewardEvent;
+import co.naughtyspirit.habits.bus.events.net.reward.GetRewardsEvent;
+import co.naughtyspirit.habits.bus.events.net.reward.UpdateRewardEvent;
+import co.naughtyspirit.habits.bus.producers.net.RewardEventsProducer;
+import co.naughtyspirit.habits.bus.producers.net.UserEventsProducer;
 import co.naughtyspirit.habits.net.models.DeletedItem;
 import co.naughtyspirit.habits.net.models.reward.Reward;
+import co.naughtyspirit.habits.utils.FontsLoaderUtil;
 
 /**
  * * Created by Seishin <atanas@naughtyspirit.co>
@@ -41,9 +43,12 @@ public class RewardsListAdapter extends BaseAdapter {
     private ArrayList<Reward> rewards = new ArrayList<>();
     private LayoutInflater inflater;
 
+    private Typeface helvetica;
+
     public RewardsListAdapter(Context ctx) {
         this.ctx = ctx;
         this.inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.helvetica = FontsLoaderUtil.getHelveticaNeue(ctx);
 
         BusProvider.getInstance().register(this);
     }
@@ -63,7 +68,9 @@ public class RewardsListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
 
+        viewHolder.rewardName.setTypeface(helvetica);
         viewHolder.rewardName.setText(reward.getText());
+        viewHolder.rewardPrice.setTypeface(helvetica);
         viewHolder.rewardPrice.setText(reward.getGoldAsString());
 
         viewHolder.rewardPrice.setOnClickListener(null);
@@ -177,11 +184,11 @@ public class RewardsListAdapter extends BaseAdapter {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.btn_buy_reward:
-                    RewardEventsProducer.produceBuyRewardEvent(AuthProviderFactory.getProvider().getUser(), reward);
+                    RewardEventsProducer.produceBuyRewardEvent(AuthProviderFactory.getProvider(ctx).getUser(), reward);
                     break;
 
                 case R.id.btn_delete_reward:
-                    RewardEventsProducer.produceDeleteRewardEvent(AuthProviderFactory.getProvider().getUser(), reward);
+                    RewardEventsProducer.produceDeleteRewardEvent(AuthProviderFactory.getProvider(ctx).getUser(), reward);
                     break;
             }
         }

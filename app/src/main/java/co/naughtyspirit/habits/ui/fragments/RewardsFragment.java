@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 
@@ -20,8 +22,8 @@ import butterknife.OnClick;
 import co.naughtyspirit.habits.R;
 import co.naughtyspirit.habits.auth.AuthProviderFactory;
 import co.naughtyspirit.habits.bus.BusProvider;
-import co.naughtyspirit.habits.bus.events.reward.RewardsFailureEvent;
-import co.naughtyspirit.habits.bus.producers.RewardEventsProducer;
+import co.naughtyspirit.habits.bus.events.net.reward.RewardsFailureEvent;
+import co.naughtyspirit.habits.bus.producers.net.RewardEventsProducer;
 import co.naughtyspirit.habits.net.models.reward.Reward;
 import co.naughtyspirit.habits.net.models.user.User;
 import co.naughtyspirit.habits.ui.adapters.RewardsListAdapter;
@@ -33,12 +35,13 @@ import co.naughtyspirit.habits.utils.WindowUtils;
  * *
  * * NaughtySpirit 2015
  */
-public class RewardsFragment extends Fragment {
+public class RewardsFragment extends BaseFragment {
 
     private static final String TAG = RewardsFragment.class.getName();
     
     private Activity activity;
-    
+
+    @InjectView(R.id.header) TextView header;
     @InjectView(R.id.lv_rewards) ListView rewardsList;
     @InjectView(R.id.et_reward_text) EditText rewardText;
     @InjectView(R.id.et_reward_price) EditText rewardPrice;
@@ -53,7 +56,7 @@ public class RewardsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_rewards, container, false);
         ButterKnife.inject(this, view);
 
-        RewardEventsProducer.produceGetRewardsEvent(AuthProviderFactory.getProvider().getUser());
+        RewardEventsProducer.produceGetRewardsEvent(AuthProviderFactory.getProvider(activity).getUser());
 
         initUI();
 
@@ -61,16 +64,23 @@ public class RewardsFragment extends Fragment {
     }
 
     private void initUI() {
+        header.setTypeface(getHelvetica());
+        rewardText.setTypeface(getHelveticaLight());
+        rewardPrice.setTypeface(getHelveticaLight());
         rewardsList.setAdapter(new RewardsListAdapter(activity));
     }
 
     @OnClick(R.id.btn_submit)
     public void submitTask() {
-        User user = AuthProviderFactory.getProvider().getUser();
+        User user = AuthProviderFactory.getProvider(activity).getUser();
 
-        if (TextUtils.isEmpty(rewardText.getText())
-                && TextUtils.isEmpty(rewardPrice.getText())) {
-            rewardText.setError("Couldn't be empty");
+        if (TextUtils.isEmpty(rewardText.getText())) {
+            Toast.makeText(activity, "Reward text couldn't be empty!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (TextUtils.isEmpty(rewardPrice.getText())) {
+            Toast.makeText(activity, "Reward price couldn't be empty!", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -84,13 +94,12 @@ public class RewardsFragment extends Fragment {
 
     @Subscribe
     public void onRewardObtainFailure(RewardsFailureEvent event) {
-        Log.e(TAG, event.getMessage());
+        Toast.makeText(activity, event.getMessage(), Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        
         this.activity = activity;
     }
 

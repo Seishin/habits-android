@@ -17,16 +17,21 @@ public abstract class BaseFragment extends Fragment {
 
     protected Activity activity;
     protected Typeface helveticaLight;
+    protected Typeface helvetica;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         this.helveticaLight = FontsLoaderUtil.getHelveticaNeueLight(activity);
+        this.helvetica = FontsLoaderUtil.getHelveticaNeue(activity);
     }
 
     protected Typeface getHelveticaLight() {
         return helveticaLight;
+    }
+    protected Typeface getHelvetica() {
+        return helvetica;
     }
 
     @Override

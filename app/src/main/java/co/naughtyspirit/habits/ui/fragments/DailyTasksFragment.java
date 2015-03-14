@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 
@@ -17,12 +19,12 @@ import butterknife.OnClick;
 import co.naughtyspirit.habits.R;
 import co.naughtyspirit.habits.auth.AuthProviderFactory;
 import co.naughtyspirit.habits.bus.BusProvider;
-import co.naughtyspirit.habits.bus.events.daily_task.DailyTasksFailureEvent;
-import co.naughtyspirit.habits.bus.producers.DailyTaskEventsProducer;
+import co.naughtyspirit.habits.bus.events.net.daily_task.DailyTasksFailureEvent;
+import co.naughtyspirit.habits.bus.producers.net.DailyTaskEventsProducer;
 import co.naughtyspirit.habits.net.models.daily_task.DailyTask;
 import co.naughtyspirit.habits.net.models.user.User;
-import co.naughtyspirit.habits.utils.WindowUtils;
 import co.naughtyspirit.habits.ui.adapters.DailyTasksListAdapter;
+import co.naughtyspirit.habits.utils.WindowUtils;
 
 /**
  * * Created by Seishin <atanas@naughtyspirit.co>
@@ -35,7 +37,8 @@ public class DailyTasksFragment extends BaseFragment {
     private static final String TAG = DailyTasksFragment.class.getName();
     
     private Activity activity;
-    
+
+    @InjectView(R.id.header) TextView header;
     @InjectView(R.id.lv_todos) ListView dailyTasksList;
     @InjectView(R.id.et_todo_text) EditText taskText;
     
@@ -44,7 +47,7 @@ public class DailyTasksFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_daily_tasks, container, false);
         ButterKnife.inject(this, view);
 
-        DailyTaskEventsProducer.produceGetTasksEvent(AuthProviderFactory.getProvider().getUser());
+        DailyTaskEventsProducer.produceGetTasksEvent(AuthProviderFactory.getProvider(activity).getUser());
         
         initUI();
         
@@ -52,13 +55,15 @@ public class DailyTasksFragment extends BaseFragment {
     }
 
     private void initUI() {
+        header.setTypeface(getHelvetica());
+        taskText.setTypeface(getHelveticaLight());
         dailyTasksList.setAdapter(new DailyTasksListAdapter(activity));
     }
     
 
     @OnClick(R.id.btn_submit)
     public void submitTask() {
-        User user = AuthProviderFactory.getProvider().getUser();
+        User user = AuthProviderFactory.getProvider(activity).getUser();
         DailyTaskEventsProducer.produceCreateTaskEvent(user, new DailyTask(taskText.getText().toString()));
 
         taskText.getText().clear();
@@ -67,7 +72,7 @@ public class DailyTasksFragment extends BaseFragment {
     
     @Subscribe
     public void onTasksObtainFailure(DailyTasksFailureEvent event) {
-        taskText.setError(event.getMessage());
+        Toast.makeText(activity, event.getMessage(), Toast.LENGTH_LONG).show();
     }
 
     @Override

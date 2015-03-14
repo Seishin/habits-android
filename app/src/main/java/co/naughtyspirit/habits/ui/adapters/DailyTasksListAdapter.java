@@ -1,6 +1,7 @@
 package co.naughtyspirit.habits.ui.adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,16 +20,17 @@ import butterknife.InjectView;
 import co.naughtyspirit.habits.R;
 import co.naughtyspirit.habits.auth.AuthProviderFactory;
 import co.naughtyspirit.habits.bus.BusProvider;
-import co.naughtyspirit.habits.bus.events.daily_task.CheckDailyTaskEvent;
-import co.naughtyspirit.habits.bus.events.daily_task.CreateDailyTaskEvent;
-import co.naughtyspirit.habits.bus.events.daily_task.DeleteDailyTaskEvent;
-import co.naughtyspirit.habits.bus.events.daily_task.GetDailyTasksEvent;
-import co.naughtyspirit.habits.bus.events.daily_task.UncheckDailyTaskEvent;
-import co.naughtyspirit.habits.bus.events.daily_task.UpdateDailyTaskEvent;
-import co.naughtyspirit.habits.bus.producers.DailyTaskEventsProducer;
-import co.naughtyspirit.habits.bus.producers.UserEventsProducer;
+import co.naughtyspirit.habits.bus.events.net.daily_task.CheckDailyTaskEvent;
+import co.naughtyspirit.habits.bus.events.net.daily_task.CreateDailyTaskEvent;
+import co.naughtyspirit.habits.bus.events.net.daily_task.DeleteDailyTaskEvent;
+import co.naughtyspirit.habits.bus.events.net.daily_task.GetDailyTasksEvent;
+import co.naughtyspirit.habits.bus.events.net.daily_task.UncheckDailyTaskEvent;
+import co.naughtyspirit.habits.bus.events.net.daily_task.UpdateDailyTaskEvent;
+import co.naughtyspirit.habits.bus.producers.net.DailyTaskEventsProducer;
+import co.naughtyspirit.habits.bus.producers.net.UserEventsProducer;
 import co.naughtyspirit.habits.net.models.DeletedItem;
 import co.naughtyspirit.habits.net.models.daily_task.DailyTask;
+import co.naughtyspirit.habits.utils.FontsLoaderUtil;
 
 /**
  * * Created by Seishin <atanas@naughtyspirit.co>
@@ -44,9 +46,12 @@ public class DailyTasksListAdapter extends BaseAdapter {
     private ArrayList<DailyTask> tasks = new ArrayList<>();
     private LayoutInflater inflater;
 
+    private Typeface helvetica;
+
     public DailyTasksListAdapter(Context ctx) {
         this.ctx = ctx;
         this.inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.helvetica = FontsLoaderUtil.getHelveticaNeue(ctx);
 
         BusProvider.getInstance().register(this);
     }
@@ -67,6 +72,7 @@ public class DailyTasksListAdapter extends BaseAdapter {
         }
 
         viewHolder.taskCell.setBackgroundColor(forState(task.getStateAsInt()));
+        viewHolder.taskName.setTypeface(helvetica);
         viewHolder.taskName.setText(task.getText());
 
         viewHolder.taskDelete.setOnClickListener(null);
@@ -192,14 +198,14 @@ public class DailyTasksListAdapter extends BaseAdapter {
             switch (v.getId()) {
                 case R.id.cb_check_task:
                     if (task.getStateAsBoolean()) {
-                        DailyTaskEventsProducer.produceUnCheckTaskEvent(AuthProviderFactory.getProvider().getUser(), task);
+                        DailyTaskEventsProducer.produceUnCheckTaskEvent(AuthProviderFactory.getProvider(ctx).getUser(), task);
                     } else {
-                        DailyTaskEventsProducer.produceCheckTaskEvent(AuthProviderFactory.getProvider().getUser(), task);
+                        DailyTaskEventsProducer.produceCheckTaskEvent(AuthProviderFactory.getProvider(ctx).getUser(), task);
                     }
                     break;
 
                 case R.id.btn_delete_task:
-                    DailyTaskEventsProducer.produceDeleteTaskEvent(AuthProviderFactory.getProvider().getUser(), task);
+                    DailyTaskEventsProducer.produceDeleteTaskEvent(AuthProviderFactory.getProvider(ctx).getUser(), task);
                     break;
             }
         }

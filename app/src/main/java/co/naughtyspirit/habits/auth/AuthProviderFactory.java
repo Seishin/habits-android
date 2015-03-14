@@ -1,5 +1,6 @@
 package co.naughtyspirit.habits.auth;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
@@ -16,29 +17,26 @@ public class AuthProviderFactory {
     private static final String TAG = AuthProviderFactory.class.getName();
     
     private static AuthProvider provider;
-    private static Context ctx;
 
-    public static AuthProvider getProvider() {
+    public static AuthProvider getProvider(Context ctx) {
+        return getProvider((Activity) ctx);
+    }
+
+    public static AuthProvider getProvider(Activity activity) {
         if (provider == null) {
             try {
-                provider = (AuthProvider) Class.forName(SharedPreferencesUtil.getStringPreference(ctx,
+                provider = (AuthProvider) Class.forName(SharedPreferencesUtil.getStringPreference(activity,
                         Constants.KEY_LOGIN_PROVIDER)).newInstance();
-                provider.setContext(ctx);
             } catch (Exception e) {
                 Log.e(TAG, "Cannot get instance of the auth provider.");
             }
         }
-        
+
+        provider.setActivity(activity);
         return provider;
     }
-    
-    public static void onCreate(Context ctx) {
-        AuthProviderFactory.ctx = ctx;
 
-        setAuthProvider(DefaultAuthProvider.class.getCanonicalName());
-    }
-    
-    public static void setAuthProvider(String provider) {
+    public static void setAuthProvider(Context ctx, String provider) {
         SharedPreferencesUtil.setPreference(ctx, Constants.KEY_LOGIN_PROVIDER, provider);
     }
 }

@@ -1,5 +1,6 @@
 package co.naughtyspirit.habits.auth;
 
+import android.app.Activity;
 import android.content.Context;
 
 import co.naughtyspirit.habits.net.models.user.User;
@@ -12,9 +13,9 @@ import co.naughtyspirit.habits.net.models.user.User;
  */
 public interface AuthProvider {
     
-    public void setContext(Context ctx);
+    public void setActivity(Activity activity);
     
-    public boolean login(User user);
+    public void login(User user);
     public void logout();
     public boolean isUserLoggedIn();
  

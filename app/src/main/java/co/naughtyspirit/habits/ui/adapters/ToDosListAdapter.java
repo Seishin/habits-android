@@ -1,6 +1,7 @@
 package co.naughtyspirit.habits.ui.adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,16 +20,17 @@ import butterknife.InjectView;
 import co.naughtyspirit.habits.R;
 import co.naughtyspirit.habits.auth.AuthProviderFactory;
 import co.naughtyspirit.habits.bus.BusProvider;
-import co.naughtyspirit.habits.bus.events.todo.CheckToDoEvent;
-import co.naughtyspirit.habits.bus.events.todo.CreateToDoEvent;
-import co.naughtyspirit.habits.bus.events.todo.DeleteToDoEvent;
-import co.naughtyspirit.habits.bus.events.todo.GetToDosEvent;
-import co.naughtyspirit.habits.bus.events.todo.UncheckToDoEvent;
-import co.naughtyspirit.habits.bus.events.todo.UpdateToDoEvent;
-import co.naughtyspirit.habits.bus.producers.ToDoEventsProducer;
-import co.naughtyspirit.habits.bus.producers.UserEventsProducer;
+import co.naughtyspirit.habits.bus.events.net.todo.CheckToDoEvent;
+import co.naughtyspirit.habits.bus.events.net.todo.CreateToDoEvent;
+import co.naughtyspirit.habits.bus.events.net.todo.DeleteToDoEvent;
+import co.naughtyspirit.habits.bus.events.net.todo.GetToDosEvent;
+import co.naughtyspirit.habits.bus.events.net.todo.UncheckToDoEvent;
+import co.naughtyspirit.habits.bus.events.net.todo.UpdateToDoEvent;
+import co.naughtyspirit.habits.bus.producers.net.ToDoEventsProducer;
+import co.naughtyspirit.habits.bus.producers.net.UserEventsProducer;
 import co.naughtyspirit.habits.net.models.DeletedItem;
 import co.naughtyspirit.habits.net.models.todo.ToDo;
+import co.naughtyspirit.habits.utils.FontsLoaderUtil;
 
 /**
  * * Created by Seishin <atanas@naughtyspirit.co>
@@ -44,9 +46,12 @@ public class ToDosListAdapter extends BaseAdapter {
     private ArrayList<ToDo> todos = new ArrayList<>();
     private LayoutInflater inflater;
 
+    private Typeface helvetica;
+
     public ToDosListAdapter(Context ctx) {
         this.ctx = ctx;
         this.inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.helvetica = FontsLoaderUtil.getHelveticaNeue(ctx);
 
         BusProvider.getInstance().register(this);
     }
@@ -67,6 +72,7 @@ public class ToDosListAdapter extends BaseAdapter {
         }
 
         viewHolder.todoCell.setBackgroundColor(forState(todo.getStateAsInt()));
+        viewHolder.todoName.setTypeface(helvetica);
         viewHolder.todoName.setText(todo.getText());
 
         viewHolder.todoDelete.setOnClickListener(null);
@@ -192,14 +198,14 @@ public class ToDosListAdapter extends BaseAdapter {
             switch (v.getId()) {
                 case R.id.cb_check_todo:
                     if (todo.getStateAsBoolean()) {
-                        ToDoEventsProducer.produceUnCheckToDoEvent(AuthProviderFactory.getProvider().getUser(), todo);
+                        ToDoEventsProducer.produceUnCheckToDoEvent(AuthProviderFactory.getProvider(ctx).getUser(), todo);
                     } else {
-                        ToDoEventsProducer.produceCheckToDoEvent(AuthProviderFactory.getProvider().getUser(), todo);
+                        ToDoEventsProducer.produceCheckToDoEvent(AuthProviderFactory.getProvider(ctx).getUser(), todo);
                     }
                     break;
 
                 case R.id.btn_delete_todo:
-                    ToDoEventsProducer.produceDeleteToDoEvent(AuthProviderFactory.getProvider().getUser(), todo);
+                    ToDoEventsProducer.produceDeleteToDoEvent(AuthProviderFactory.getProvider(ctx).getUser(), todo);
                     break;
             }
         }

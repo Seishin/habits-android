@@ -1,6 +1,7 @@
 package co.naughtyspirit.habits.ui.adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,15 +20,16 @@ import butterknife.InjectView;
 import co.naughtyspirit.habits.R;
 import co.naughtyspirit.habits.auth.AuthProviderFactory;
 import co.naughtyspirit.habits.bus.BusProvider;
-import co.naughtyspirit.habits.bus.events.habit.CreateHabitEvent;
-import co.naughtyspirit.habits.bus.events.habit.DeleteHabitEvent;
-import co.naughtyspirit.habits.bus.events.habit.GetHabitsEvent;
-import co.naughtyspirit.habits.bus.events.habit.IncrementHabitEvent;
-import co.naughtyspirit.habits.bus.events.habit.UpdateHabitEvent;
-import co.naughtyspirit.habits.bus.producers.HabitEventsProducer;
-import co.naughtyspirit.habits.bus.producers.UserEventsProducer;
+import co.naughtyspirit.habits.bus.events.net.habit.CreateHabitEvent;
+import co.naughtyspirit.habits.bus.events.net.habit.DeleteHabitEvent;
+import co.naughtyspirit.habits.bus.events.net.habit.GetHabitsEvent;
+import co.naughtyspirit.habits.bus.events.net.habit.IncrementHabitEvent;
+import co.naughtyspirit.habits.bus.events.net.habit.UpdateHabitEvent;
+import co.naughtyspirit.habits.bus.producers.net.HabitEventsProducer;
+import co.naughtyspirit.habits.bus.producers.net.UserEventsProducer;
 import co.naughtyspirit.habits.net.models.DeletedItem;
 import co.naughtyspirit.habits.net.models.habit.Habit;
+import co.naughtyspirit.habits.utils.FontsLoaderUtil;
 
 /**
  * * Created by Seishin <atanas@naughtyspirit.co>
@@ -41,9 +43,12 @@ public class HabitsListAdapter extends BaseAdapter {
     private ArrayList<Habit> habits = new ArrayList<>();
     private LayoutInflater inflater;
 
+    private Typeface helvetica;
+
     public HabitsListAdapter(Context ctx) {
         this.ctx = ctx;
         this.inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.helvetica = FontsLoaderUtil.getHelveticaNeue(ctx);
 
         BusProvider.getInstance().register(this);
     }
@@ -66,6 +71,7 @@ public class HabitsListAdapter extends BaseAdapter {
         HabitOnClickListener listener = new HabitOnClickListener(habit);
 
         viewHolder.habitCell.setBackgroundColor(forState(habit.getStateAsInt()));
+        viewHolder.habitName.setTypeface(helvetica);
         viewHolder.habitName.setText(habit.getText());
 
         viewHolder.deleteHabit.setOnClickListener(null);
@@ -190,12 +196,12 @@ public class HabitsListAdapter extends BaseAdapter {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.btn_increment_habit:
-                    HabitEventsProducer.produceIncrementHabitEvent(AuthProviderFactory.getProvider().getUser(),
+                    HabitEventsProducer.produceIncrementHabitEvent(AuthProviderFactory.getProvider(ctx).getUser(),
                             habit);
                     break;
 
                 case R.id.btn_delete_habit:
-                    HabitEventsProducer.produceDeleteHabitEvent(AuthProviderFactory.getProvider().getUser(),
+                    HabitEventsProducer.produceDeleteHabitEvent(AuthProviderFactory.getProvider(ctx).getUser(),
                             habit);
                     break;
             }

@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 
@@ -17,8 +19,8 @@ import butterknife.OnClick;
 import co.naughtyspirit.habits.R;
 import co.naughtyspirit.habits.auth.AuthProviderFactory;
 import co.naughtyspirit.habits.bus.BusProvider;
-import co.naughtyspirit.habits.bus.events.habit.HabitsFailureEvent;
-import co.naughtyspirit.habits.bus.producers.HabitEventsProducer;
+import co.naughtyspirit.habits.bus.events.net.habit.HabitsFailureEvent;
+import co.naughtyspirit.habits.bus.producers.net.HabitEventsProducer;
 import co.naughtyspirit.habits.net.models.habit.Habit;
 import co.naughtyspirit.habits.ui.adapters.HabitsListAdapter;
 import co.naughtyspirit.habits.utils.WindowUtils;
@@ -32,7 +34,8 @@ import co.naughtyspirit.habits.utils.WindowUtils;
 public class HabitsFragment extends BaseFragment {
 
     private static final String TAG = HabitsFragment.class.getName();
-    
+
+    @InjectView(R.id.header) TextView header;
     @InjectView(R.id.lv_habits) ListView habitsList;
     @InjectView(R.id.et_habit_text) EditText habitText;
 
@@ -41,7 +44,7 @@ public class HabitsFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_habits, container, false);
         ButterKnife.inject(this, view);
 
-        HabitEventsProducer.produceGetHabitsEvent(AuthProviderFactory.getProvider().getUser());
+        HabitEventsProducer.produceGetHabitsEvent(AuthProviderFactory.getProvider(activity).getUser());
 
         initUI();
 
@@ -49,12 +52,14 @@ public class HabitsFragment extends BaseFragment {
     }
 
     private void initUI() {
+        header.setTypeface(getHelvetica());
+        habitText.setTypeface(getHelveticaLight());
         habitsList.setAdapter(new HabitsListAdapter(activity));
     }
 
     @OnClick(R.id.btn_submit)
     public void submitHabit() {
-        HabitEventsProducer.produceCreateHabitEvent(AuthProviderFactory.getProvider().getUser(),
+        HabitEventsProducer.produceCreateHabitEvent(AuthProviderFactory.getProvider(activity).getUser(),
                 new Habit(habitText.getText().toString()));
 
         habitText.getText().clear();
@@ -63,7 +68,7 @@ public class HabitsFragment extends BaseFragment {
 
     @Subscribe
     public void onHabitsFailure(HabitsFailureEvent event) {
-        habitText.setError(event.getMessage());
+        Toast.makeText(activity, event.getMessage(), Toast.LENGTH_LONG).show();
     }
 
     @Override

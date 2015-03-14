@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 
@@ -18,8 +20,8 @@ import butterknife.OnClick;
 import co.naughtyspirit.habits.R;
 import co.naughtyspirit.habits.auth.AuthProviderFactory;
 import co.naughtyspirit.habits.bus.BusProvider;
-import co.naughtyspirit.habits.bus.events.todo.ToDoFailureEvent;
-import co.naughtyspirit.habits.bus.producers.ToDoEventsProducer;
+import co.naughtyspirit.habits.bus.events.net.todo.ToDoFailureEvent;
+import co.naughtyspirit.habits.bus.producers.net.ToDoEventsProducer;
 import co.naughtyspirit.habits.net.models.todo.ToDo;
 import co.naughtyspirit.habits.net.models.user.User;
 import co.naughtyspirit.habits.ui.adapters.ToDosListAdapter;
@@ -31,12 +33,13 @@ import co.naughtyspirit.habits.utils.WindowUtils;
  * *
  * * NaughtySpirit 2015
  */
-public class ToDoTasksFragment extends Fragment {
+public class ToDoTasksFragment extends BaseFragment {
 
     private static final String TAG = ToDoTasksFragment.class.getName();
 
     private Activity activity;
 
+    @InjectView(R.id.header) TextView header;
     @InjectView(R.id.lv_todos) ListView todosList;
     @InjectView(R.id.et_todo_text) EditText todoText;
 
@@ -45,7 +48,7 @@ public class ToDoTasksFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_todo_tasks, container, false);
         ButterKnife.inject(this, view);
 
-        ToDoEventsProducer.produceGetToDosEvent(AuthProviderFactory.getProvider().getUser());
+        ToDoEventsProducer.produceGetToDosEvent(AuthProviderFactory.getProvider(activity).getUser());
 
         initUI();
 
@@ -53,13 +56,15 @@ public class ToDoTasksFragment extends Fragment {
     }
 
     private void initUI() {
+        header.setTypeface(getHelvetica());
+        todoText.setTypeface(getHelveticaLight());
         todosList.setAdapter(new ToDosListAdapter(activity));
     }
 
 
     @OnClick(R.id.btn_submit)
     public void submitTask() {
-        User user = AuthProviderFactory.getProvider().getUser();
+        User user = AuthProviderFactory.getProvider(activity).getUser();
         ToDoEventsProducer.produceCreateToDoEvent(user, new ToDo(todoText.getText().toString()));
 
         todoText.getText().clear();
@@ -68,7 +73,7 @@ public class ToDoTasksFragment extends Fragment {
 
     @Subscribe
     public void onToDosObtainFailure(ToDoFailureEvent event) {
-        todoText.setError(event.getMessage());
+        Toast.makeText(activity, event.getMessage(), Toast.LENGTH_LONG).show();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package co.naughtyspirit.habits.auth;
 
+import android.app.Activity;
 import android.content.Context;
 
 import co.naughtyspirit.habits.net.models.user.User;
@@ -12,53 +13,27 @@ import co.naughtyspirit.habits.utils.SharedPreferencesUtil;
  * *
  * * NaughtySpirit 2015
  */
-public class DefaultAuthProvider implements AuthProvider {
+public class DefaultAuthProvider extends BaseAuthProvider {
     
     private static final String TAG = DefaultAuthProvider.class.getName();
 
-    private Context ctx;
-
     @Override
-    public void setContext(Context ctx) {
-        this.ctx = ctx;
+    public void setActivity(Activity activity) {
+        this.activity = activity;
     }
 
     @Override
-    public boolean login(User user) {
-        if (user != null) {
-            SharedPreferencesUtil.setPreference(ctx, Constants.KEY_AUTH_TOKEN, user.getToken());
-            SharedPreferencesUtil.setPreference(ctx, Constants.KEY_USER_ID, user.getId());
-            SharedPreferencesUtil.setPreference(ctx, Constants.KEY_USER_NAME, user.getName());
-            SharedPreferencesUtil.setPreference(ctx, Constants.KEY_USER_EMAIL, user.getEmail());
-            
-            return true;
-        }
-        
-        return false;
+    public void login(User user) {
+        super.login(user);
     }
 
     @Override
     public void logout() {
-        SharedPreferencesUtil.removePreference(ctx, Constants.KEY_LOGIN_PROVIDER);
-        SharedPreferencesUtil.removePreference(ctx, Constants.KEY_AUTH_TOKEN);
-        SharedPreferencesUtil.removePreference(ctx, Constants.KEY_USER_ID);
-        SharedPreferencesUtil.removePreference(ctx, Constants.KEY_USER_NAME);
-        SharedPreferencesUtil.removePreference(ctx, Constants.KEY_USER_EMAIL);
+        super.logout();
     }
 
     @Override
     public boolean isUserLoggedIn() {
-        return SharedPreferencesUtil.getStringPreference(ctx, Constants.KEY_USER_ID) != null;
-    }
-
-    @Override
-    public User getUser() {
-        User user = new User();
-        user.setId(SharedPreferencesUtil.getStringPreference(ctx, Constants.KEY_USER_ID));
-        user.setToken(SharedPreferencesUtil.getStringPreference(ctx, Constants.KEY_AUTH_TOKEN));
-        user.setEmail(SharedPreferencesUtil.getStringPreference(ctx, Constants.KEY_USER_EMAIL));
-        user.setName(SharedPreferencesUtil.getStringPreference(ctx, Constants.KEY_USER_NAME));
-
-        return user;
+        return SharedPreferencesUtil.getStringPreference(activity, Constants.KEY_USER_ID) != null;
     }
 }

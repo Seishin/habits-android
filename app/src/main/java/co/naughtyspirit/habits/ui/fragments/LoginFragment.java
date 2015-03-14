@@ -1,10 +1,8 @@
 package co.naughtyspirit.habits.ui.fragments;
 
 import android.app.Activity;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,9 +15,8 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import co.naughtyspirit.habits.R;
 import co.naughtyspirit.habits.auth.DefaultAuthProvider;
-import co.naughtyspirit.habits.bus.producers.UserEventsProducer;
+import co.naughtyspirit.habits.bus.producers.net.UserEventsProducer;
 import co.naughtyspirit.habits.net.models.user.User;
-import co.naughtyspirit.habits.utils.FontsLoaderUtil;
 import co.naughtyspirit.habits.ui.interfaces.OnViewPagerFragmentChange;
 
 /**

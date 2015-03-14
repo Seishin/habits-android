@@ -15,7 +15,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import co.naughtyspirit.habits.R;
 import co.naughtyspirit.habits.auth.DefaultAuthProvider;
-import co.naughtyspirit.habits.bus.producers.UserEventsProducer;
+import co.naughtyspirit.habits.bus.producers.net.UserEventsProducer;
 import co.naughtyspirit.habits.net.models.user.User;
 import co.naughtyspirit.habits.ui.interfaces.OnViewPagerFragmentChange;
 
